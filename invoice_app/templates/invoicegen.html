@@ -1,0 +1,17 @@
+{% extends 'invoicebase/invbase.html' %}
+{% block content %}
+<form id="form-container" method="post">
+    {% csrf_token %}
+    <div class="col">
+    {{ invoice }}
+    </div>
+    {{ lineitems.management_form }}
+    {% for lineitem in lineitems %}
+    <div class="lineitem">
+        {{ lineitem }}
+    </div>
+    {% endfor %}
+    <button id="add-form" type="button">Add Line Item</button>
+    <input type="submit" value="Generate">
+</form>
+{% endblock %}
