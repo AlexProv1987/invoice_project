@@ -1,0 +1,1 @@
+'''class to return PDF of an invoice object back to user'''
