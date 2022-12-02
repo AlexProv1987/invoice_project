@@ -17,13 +17,6 @@ class clientselect(forms.Select):
             option['attrs']['client-name'] = value.instance.client_name
         return option
 
-class productselect(forms.Select):
-    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
-        option = super().create_option(name, value, label, selected, index, subindex, attrs)
-        if value:
-            option['attrs']['product'] = value.instance.p_name
-        return option
-
 '''model form classes'''
 class invoiceform(ModelForm):
     class Meta:
@@ -43,14 +36,8 @@ class lineitemform(ModelForm):
     class Meta:
         model = lineitem
         fields = ['product', 'line_item_qty']
-        labels = {
-            'product': 'Product',
-            'line_item_qty': 'Units'
-        }
-        widgets = {
-            'product_options': productselect
-        }
 
+       
 lineitemformset = modelformset_factory(
     lineitem, fields=("product", "line_item_qty"),labels={'product': 'Product','line_item_qty': 'Units'}, extra=1
 )
