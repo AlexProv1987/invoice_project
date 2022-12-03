@@ -4,31 +4,58 @@ from invoice_app.models import invoice,lineitem,invoicefile
 from product_app.models import product
 from business_app.models import business,client
 from invoicegenie.project_classes.helperclass import postreqhelpers
+from django.core.exceptions import FieldError
 '''class to handle post request and create invoice object and all related objects'''
 class handleinvoicegen():
+
     def __init__(self, postreq):
         self.invoice = postreqhelpers.parsepost(postdict=postreq,keys=('bus_reltn', 'client_reltn'))
         self.postrequest = postreq
-        self.inv_id = 0
-        self._createinvoice()
+        self.invobj = invoice.objects.none()
+        self.issuccess = False
+        if self._createinvoiceobj():
+            if self._createlineitems():
+                self.issuccess = True
 
-    def _createinvoice(self):
+    def _createinvoiceobj(self) -> bool:
         biller = business.objects.get(id=self.invoice['bus_reltn'])
         billedto = client.objects.get(id=self.invoice['client_reltn'])
         products_overall_qty = self._gettotalproducts()
-        newinv = invoice.objects.create(
-            bus_reltn = biller,
-            client_reltn = billedto,
-            line_item_cnt = self.postrequest['form-TOTAL_FORMS'],
-            product_qty = products_overall_qty,
-            inv_status = 1,
-            inv_billed_date = datetime.datetime.today()
-        )
-        print(newinv.id)
-        print(products_overall_qty)
-        print(biller.bus_name, billedto.client_name)
+        try:
+            newinv = invoice.objects.create(
+                bus_reltn = biller,
+                client_reltn = billedto,
+                line_item_cnt = self.postrequest['form-TOTAL_FORMS'],
+                product_qty = products_overall_qty,
+                total_billed = self._gettotalbilled(),
+                inv_status = invoice.Generated,
+            )
+        except FieldError:
+            return False
+
+        if(newinv.pk != 0):
+            self.invobj = newinv
+            return True
+        else:
+            return False
+
+    def _createlineitems(self) -> bool:
+        lineitem_objects = []
+        for value in range(int(self.postrequest['form-TOTAL_FORMS'])):
+            product_billed = product.objects.get(id=int(self.postrequest[f'form-{value}-product']))
+            lineitem_objects.append(
+                lineitem(
+                    inv_reltn = self.invobj,
+                    product = product_billed,
+                    line_item_qty = int(self.postrequest[f'form-{value}-line_item_qty']),
+                    line_item_amt = product_billed.p_price * Decimal(self.postrequest[f'form-{value}-line_item_qty'])
+                )
+            )
         
-        return None
+        if(len(lineitem_objects) != 0):
+            lineitem.objects.bulk_create(lineitem_objects)
+            return True
+
 
     def _gettotalproducts(self) -> int:
         sum = 0
@@ -37,8 +64,15 @@ class handleinvoicegen():
         return sum
 
     def _gettotalbilled(self) -> Decimal:
-        pass
+        totalBilled = 0.00
+        for value in range(int(self.postrequest['form-TOTAL_FORMS'])):
+            curr_product = product.objects.get(id=int(self.postrequest[f'form-{value}-product']))
+            product_total = curr_product.p_price * Decimal(self.postrequest[f'form-{value}-line_item_qty'])
+            totalBilled+=product_total
+        return totalBilled
 
+    def _createinvoicepdf(self):
+        pass
 '''
 EX postreq
 <QueryDict: 

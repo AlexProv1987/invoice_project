@@ -1,4 +1,4 @@
-from django.forms import ModelForm,modelformset_factory
+from django.forms import ModelForm,modelformset_factory, BaseModelFormSet
 from django import forms
 from .models import invoice, lineitem
 
@@ -30,14 +30,13 @@ class invoiceform(ModelForm):
             'bus_options': businessselect,
             'client_options': clientselect
         }
+#we need to override the BaseModelFormSet constructor as by default well return all line items each time
+class baselineitemformset(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.queryset = lineitem.objects.none()
 
-
-class lineitemform(ModelForm):
-    class Meta:
-        model = lineitem
-        fields = ['product', 'line_item_qty']
-
-       
 lineitemformset = modelformset_factory(
-    lineitem, fields=("product", "line_item_qty"),labels={'product': 'Product','line_item_qty': 'Units'}, extra=1
+    lineitem, fields=("product", "line_item_qty"),labels={'product': 'Product','line_item_qty': 'Units'}, extra=1,
+    formset=baselineitemformset
 )
