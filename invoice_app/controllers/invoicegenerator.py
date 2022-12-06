@@ -75,12 +75,73 @@ class handleinvoicegen():
         return totalBilled
 
 #we have to inherit the base FPDF class to create our own header and footer methods as the default return none
-class myFPDF(FPDF):
+#we need to super the constructor so we can pass our instance of the invoice object to the class without re querying
+class custFPDF(FPDF):
+    def __init__(self, orientation, unit,format, invobj):
+        super(custFPDF,self).__init__()
+        self.cur_orientation = orientation
+        self.unit = unit
+        self.format = format
+        self.invoice = invobj
 
     def header(self) -> None:
-        pass
+        today = datetime.date.today()
+        #first line 
+        self.set_font('Times', 'B', 15)
+        self.cell(100,0,f"{str(self.invoice.bus_reltn.bus_name)}",ln=0)
+        self.image('./busimgs/testlogo2.PNG', 95, 8, 33)
+        self.set_font('Times', 'B', 10)
+        self.cell(100,0,'INVOICE'.rjust(90), ln=1)
+        self.ln(6)
+        #second line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f"{self.invoice.bus_reltn.bus_street}",ln=0)
+        self.set_font('Times','', 12)
+        self.cell(100,0,f'INV{str(self.invoice.pk)}'.rjust(77), ln=1)
+        self.ln(6)
+        #third line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f"{self.invoice.bus_reltn.bus_city},{self.invoice.bus_reltn.bus_state}",ln=0)
+        self.set_font('Times', 'B', 10)
+        self.cell(100,0,f'DATE'.rjust(93), ln=1)
+        self.ln(6)
+        #fourth line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f"{self.invoice.bus_reltn.bus_phone}",ln=0)
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f'{today.strftime("%b %d %Y")}'.rjust(74), ln=1)
+        self.ln(6)
+        #fifth line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f"{self.invoice.bus_reltn.bus_email}",ln=0)
+        self.set_font('Times', 'B', 10)
+        self.cell(100,0,'DUE'.rjust(94), ln=1)
+        self.ln(6)
+        #sixth line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,'On Receipt'.rjust(169), ln=0)
+        self.ln(6)
+        #seventh line
+        self.set_font('Times', 'B', 10)
+        self.cell(100,0,'BALANACE DUE'.rjust(194), ln=0)
+        self.ln(6)
+        #eigth line
+        self.set_font('Times', '', 12)
+        self.cell(100,0,f"USD {str(self.invoice.total_billed)}".rjust(168),ln=0)
+        self.ln(6)
+        # Set up a logo
+        #self.image('./busimgs/testlogo2.png', 10, 8, 33)
+        # Line break
+        self.ln(20)
+    
     def footer(self) -> None:
-        pass
+        self.set_y(-10)
+        
+        self.set_font('Arial', 'I', 8)
+        
+        # Add a page number
+        page = 'Page ' + str(self.page_no()) + '/{nb}'
+        self.cell(0, 10, page, 0, 0, 'C')
 
 class generatepdf():
 
@@ -91,25 +152,56 @@ class generatepdf():
         self._pdfgeneration()
 
     def _pdfgeneration(self):
-        pdf = myFPDF('P', 'mm', 'A4')
+        pdf = custFPDF(orientation='P', unit= 'mm', format='A4', invobj=self.inv)
+        #add page calls add header/footer
         pdf.add_page()
-        pdf.set_font('courier', 'B', 12)
-        pdf.cell(40,10, f'Invoice#{self.inv.pk}'.rjust(40),0,1)
-        pdf.cell(200,10, f"{'Pay To:'.ljust(35)} {'Client:'.rjust(20)}",0,1)
-        pdf.set_font('courier', '', 12)
-        pdf.cell(200,10,f"{str(self.inv.bus_reltn.bus_name).ljust(35)} {str(self.inv.client_reltn.client_name).rjust(24)}",0,1)
-        pdf.cell(200,10,f"{str(self.inv.bus_reltn.bus_street).ljust(35)} {str(self.inv.client_reltn.client_street).rjust(24)}",0,1)
-        pdf.cell(200,10,f"{str(self.inv.bus_reltn.bus_zip).ljust(35)} {str(self.inv.client_reltn.client_zip).rjust(24)}",0,1)
-        pdf.cell(200,10,f"{str(self.inv.bus_reltn.bus_phone).ljust(35)} {str(self.inv.client_reltn.client_phone).rjust(24)}",0,1)
-        pdf.cell(200,10,f"{str(self.inv.bus_reltn.bus_email).ljust(35)} {str(self.inv.client_reltn.client_email).rjust(24)}",0,1)
+        pdf.line(10, 60, 200, 60)
+        pdf.set_font('Times', 'B', 15)
+        pdf.cell(0,5, 'BILL TO',ln=1)
+        pdf.ln(3)
+        pdf.set_font('Times', 'B', 14)
+        pdf.cell(0,5, f'{self.inv.client_reltn.client_name}', ln=1)
+        pdf.set_font('Times', '', 12)
+        pdf.cell(0,5, f'{self.inv.client_reltn.client_street}', ln=1)
+        pdf.cell(0,5, f'{self.inv.client_reltn.client_city}, {self.inv.client_reltn.client_state}', ln=1)
+        pdf.cell(0,5, f'{self.inv.client_reltn.client_phone}', ln=1)
+        pdf.cell(0,5, f'{self.inv.client_reltn.client_email}', ln=1)
         pdf.ln(10)
-        pdf.set_font('courier', '', 12)
-        pdf.cell(200, 8, f"{'Item'.ljust(30)} {'Qty'.rjust(20)} {'Total'.rjust(10)}", 0, 1)
+        pdf.set_font('Times', 'B', 12)
+        pdf.line(10, 60, 200, 60)
+        pdf.line(10, 120, 200, 120)
+        pdf.cell(200, 8, f"{'DESCRIPTION'.ljust(40)} {'RATE'.rjust(30)}  {'QTY'.rjust(30)} {'AMOUNT'.rjust(30)}", ln=1)
+        pdf.line(10, 128, 200, 128)
+        #loop over line items to create pseduo table
         for li in self.lineitems:
-            pdf.cell(200, 8, f"{str(li.product.p_name).ljust(30)} {str(li.line_item_qty).rjust(20)} {str(li.line_item_amt).rjust(10)}" , 0, 1)
+            pdf.set_font('Times', '', 12)
+            pdf.cell(50,5, f"{li.product.p_name}", ln=0)
+            pdf.cell(50,5, f"{str(li.product.p_price).rjust(43)}", ln=0)
+            pdf.cell(50,5, f"{str(li.line_item_qty).rjust(34)}", ln=0)
+            pdf.cell(50,5, f"{str(li.line_item_amt).rjust(28)}", ln=1)
+            pdf.set_font('Times', '', 10)
+            pdf.cell(200,8, f"{li.product.p_description}", ln=1)
+        #get y axis where our line items ended
+        new_y = pdf.get_y()
+        #draw a line to end line items with the current y axis position
+        pdf.line(10,new_y,200,new_y)
+        pdf.ln(5)
+        pdf.set_font('Times', 'B', 12)
+        pdf.cell(100,0,f"{'TOTAL'.rjust(87)}", ln=0)
+        pdf.cell(100,0,f"{str(self.inv.total_billed).rjust(75)}", ln=1)
+        new_y = pdf.get_y()
+        new_y+=4
+        pdf.line(97, new_y, 200, new_y)
         pdf.ln(10)
-        pdf.cell(200,8,f"{''.ljust(30)} {'Qty Total'.rjust(25)} {'Total Due'.rjust(10)}", 0, 1)
-        pdf.cell(200, 8, f"{''.ljust(30)} {str(self.inv.product_qty).rjust(20)} {str(self.inv.total_billed).rjust(15)}" , 0, 1)
+        pdf.cell(50,0,f"{'BALANCE DUE'.rjust(93)}", ln=0)
+        pdf.cell(50,0,f"USD: {str(self.inv.total_billed)}".rjust(118), ln=1)
+        new_y = pdf.get_y()
+        new_y+=4
+        pdf.line(97, new_y, 200, new_y)
+        pdf.line(97, new_y, 200, new_y)
+        pdf.cell(100,0, "Please pay to Robertson's Enterprises.", ln=1)
+        pdf.ln(5)
+        pdf.cell(100,0, "Thank you for your business.", ln=1)
         pdf.output(self.pdffile, 'F')
 
 '''
