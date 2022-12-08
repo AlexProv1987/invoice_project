@@ -12,10 +12,12 @@ class invoice(models.Model):
     Generated = 1
     Billed = 2
     Paid = 3
+    ReadyToBill = 4
     inv_status_choices = (
         (Generated,('Generated')),
         (Billed,('Billed')),
         (Paid,('Paid')),
+        (ReadyToBill,('Ready To Bill')),
     )
     bus_reltn = models.ForeignKey(business, on_delete=models.PROTECT)
     client_reltn = models.ForeignKey(client,on_delete=models.PROTECT)
