@@ -31,6 +31,7 @@ class handleinvoicegen():
                 product_qty = products_overall_qty,
                 total_billed = self._gettotalbilled(),
                 inv_status = invoice.Generated,
+                inv_generated_date = datetime.date.today(),
             )
         except FieldError:
             return False
