@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .modelforms import invoiceform, lineitemformset
+from apps.invoice_app.models import invoice,lineitem
 from .controllers.invoicegenerator import handleinvoicegen, generatepdf
 from django.contrib import messages
 from django.http import FileResponse
@@ -9,18 +10,16 @@ from django.http import FileResponse
 def invoicegen(request):
     if request.method == 'POST':
         newinv = handleinvoicegen(request.POST)
-        invpdf = generatepdf(newinv.lineitemobj,newinv.invobj)    
-        '''Test Code'''
-        #FileResponse(open(invpdf.invfile.file_loc, 'rb'), as_attachment=True, content_type='application/pdf')
+        #generatepdf(newinv.lineitemobj,newinv.invobj)    
         messages.info(request, f'Created INV{newinv.invobj.pk} For {newinv.invobj.bus_reltn.bus_name} To {newinv.invobj.client_reltn.client_name} Succesfully!')
-        return redirect('invoice-gen')
-        '''End Test code'''
-    '''Test Code'''
-    '''End Test Code'''
+        return redirect('inv-submit',newinv.invobj.bus_reltn.bus_name,newinv.invobj.pk)
     invoice = invoiceform()
     lineitems = lineitemformset()
     context = {'invoice': invoice,'lineitems':lineitems}
     return render(request, 'invoicegen.html', context)
 
-def invoicesubmission(request, pk):
-    pass
+def invoicesview(request,bus,pk):
+    invobj = invoice.objects.get(pk=pk)
+    invli = lineitem.objects.filter(inv_reltn=pk)
+    context = {'invobj': invobj, 'invli':invli}
+    return render(request, 'invoiceview.html', context=context)
