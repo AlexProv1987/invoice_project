@@ -59,7 +59,6 @@ class handleinvoicegen():
             self.lineitemobj = lineitem_objects
             return True
 
-
     def _gettotalproducts(self) -> int:
         sum = 0
         for value in range(int(self.postrequest['form-TOTAL_FORMS'])):
@@ -74,8 +73,10 @@ class handleinvoicegen():
             totalBilled+=product_total
         return totalBilled
 
-#we have to inherit the base FPDF class to create our own header and footer methods as the default return none
-#we need to super the constructor so we can pass our instance of the invoice object to the class without re querying
+'''
+we have to inherit the base FPDF class to create our own header and footer methods as the default return none
+we need to super the constructor so we can pass our instance of the invoice object to the class without re querying
+'''
 class custFPDF(FPDF):
     def __init__(self, orientation, unit,format, invobj):
         super(custFPDF,self).__init__()
@@ -143,6 +144,7 @@ class custFPDF(FPDF):
         page = 'Page ' + str(self.page_no()) + '/{nb}'
         self.cell(0, 10, page, 0, 0, 'C')
 
+'''class to handle generating the PDF with db data, utilizes custFPDF'''
 class generatepdf():
 
     def __init__(self, liobj, invobj):
