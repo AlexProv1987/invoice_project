@@ -1,7 +1,7 @@
 from django.contrib import admin
-from business_app.models import business, client
-from product_app.models import product
-from invoice_app.models import invoice,invoicefile,lineitem
+from apps.business_app.models import business, client
+from apps.product_app.models import product
+from apps.invoice_app.models import invoice,invoicefile,lineitem
 # Register your models here.
 
 admin.site.register(business)

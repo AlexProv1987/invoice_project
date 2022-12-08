@@ -1,8 +1,8 @@
-{% extends 'invoicebase/invbase.html' %}
+{% extends 'base/base.html' %}
 {% block content %}
 <form id="form-container" method="post">
     {% csrf_token %}
-    <div class="col">
+    <div>
     {{ invoice }}
     </div>
     {{ lineitems.management_form }}

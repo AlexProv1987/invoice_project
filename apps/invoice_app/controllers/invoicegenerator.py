@@ -1,8 +1,8 @@
 import datetime
 from decimal import *
-from invoice_app.models import invoice,lineitem,invoicefile
-from product_app.models import product
-from business_app.models import business,client
+from apps.invoice_app.models import invoice,lineitem,invoicefile
+from apps.product_app.models import product
+from apps.business_app.models import business,client
 from invoicegenie.project_classes.helperclass import postreqhelpers
 from django.core.exceptions import FieldError
 from fpdf import FPDF
@@ -148,9 +148,10 @@ class generatepdf():
     def __init__(self, liobj, invobj):
         self.inv = invobj
         self.lineitems = liobj
-        self.pdffile = f'{self.inv.pk}.pdf'
+        self.invfile = invoicefile.objects.none()
+        self.pdf_file_nm = f'{self.inv.pk}_{self.inv.bus_reltn.bus_name}.pdf'
         self._pdfgeneration()
-
+        
     def _pdfgeneration(self):
         pdf = custFPDF(orientation='P', unit= 'mm', format='A4', invobj=self.inv)
         #add page calls add header/footer
@@ -181,7 +182,8 @@ class generatepdf():
             pdf.cell(50,5, f"{str(li.line_item_amt).rjust(28)}", ln=1)
             pdf.set_font('Times', '', 10)
             pdf.cell(200,8, f"{li.product.p_description}", ln=1)
-        #get y axis where our line items ended
+        #get y axis where our line items ended, since we never know where we end up any additional line draws need
+        #to get the curreny Y axis again
         new_y = pdf.get_y()
         #draw a line to end line items with the current y axis position
         pdf.line(10,new_y,200,new_y)
@@ -198,11 +200,21 @@ class generatepdf():
         new_y = pdf.get_y()
         new_y+=4
         pdf.line(97, new_y, 200, new_y)
+        new_y+=2
         pdf.line(97, new_y, 200, new_y)
         pdf.cell(100,0, "Please pay to Robertson's Enterprises.", ln=1)
         pdf.ln(5)
         pdf.cell(100,0, "Thank you for your business.", ln=1)
-        pdf.output(self.pdffile, 'F')
+        pdf.output(f'./pdf_dir/{self.pdf_file_nm}', 'F')
+        self._savepdf()
+        return 
+
+    def _savepdf(self) -> invoicefile:
+        self.invfile = invoicefile.objects.create(
+            inv_reltn = self.inv,
+            file_loc = f'./pdf_dir/{self.pdf_file_nm}'
+        )
+        
 
 '''
 EX postreq
