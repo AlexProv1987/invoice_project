@@ -5,6 +5,7 @@
          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     </head>
     <body>
+        {% include 'messages/messages.html' %}
         {% block content %}
         {% endblock %}
     </body>
@@ -13,8 +14,8 @@
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-
         let formNum = lineitemform.length-1
+        
         addButton.addEventListener('click', addForm)
 
         function addForm(e){

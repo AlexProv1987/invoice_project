@@ -1,8 +1,8 @@
-{% extends 'invoicebase/invbase.html' %}
+{% extends 'base/base.html' %}
 {% block content %}
 <form id="form-container" method="post">
     {% csrf_token %}
-    <div class="col">
+    <div>
     {{ invoice }}
     </div>
     {{ lineitems.management_form }}
@@ -12,6 +12,6 @@
     </div>
     {% endfor %}
     <button id="add-form" type="button">Add Line Item</button>
-    <input type="submit" value="Generate">
+    <input type="submit" href="invoice-gen" value="Generate">
 </form>
 {% endblock %}
