@@ -14,7 +14,7 @@ class postreqhelpers():
                 returnDict.update({key:postdict[key]})
             except KeyError:
                 continue
-        print(returnDict)
+
         return returnDict
 
 '''unused'''
