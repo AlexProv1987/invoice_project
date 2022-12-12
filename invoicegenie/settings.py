@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.business_app",
     "apps.product_app",
     "apps.invoice_app",
+    "apps.payment_app",
 ]
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
