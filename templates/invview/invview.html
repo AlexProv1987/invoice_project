@@ -118,12 +118,17 @@
                     <hr />
 
                     <div>
-                        {% if invobj.inv_status == 1 and not invobj.inv_status == 4 or invobj.inv_status == 4 and not invobj.inv_status == 1 %}
-                        <span class="text-secondary-d1 text-105">Ready To Bill Invoices Will Be Mailed 9AM CST Daily</span>
-                        <a id="submit" href="{% url 'modify-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Submit</a>
-                        <a href="#" class="btn btn-info btn-danger px-4 float-right mt-3 mt-lg-0 mr-2">Cancel</a>
+                        {% if invobj.inv_status == 1 %}
+                        <span class="text-secondary-d1 text-105">Invoice Generated on Date Here</span>
+                        <a id="submit" href="{% url 'modify-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Ready To Bill</a>
+                        <a href="{% url 'cancel-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-danger px-4 float-right mt-3 mt-lg-0 mr-2">Cancel</a>
+                        {% elif invobj.inv_status == 4 %}
+                        <span class="text-secondary-d1 text-105">Invoice Generated on Date Here, Invoice is Ready To Bill</span>
+                        <a id="submit" href="{% url 'modify-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Billed</a>
+                        <a href="{% url 'cancel-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-danger px-4 float-right mt-3 mt-lg-0 mr-2">Cancel</a>
                         {% elif invobj.inv_status == 2 %}
-                        <span class="text-primary-d1 text-105">Invoice was E-Mailed (billed) on {{invobj.inv_billed_date|date:"M d, Y"}}</span>
+                        <span class="text-primary-d1 text-105">Invoice was Billed on {{invobj.inv_billed_date|date:"M d, Y"}}</span>
+                        <a id="submit" href="{% url 'modify-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Post Payment</a>
                         {% elif invobj.inv_status == 3 %}
                         <span class="text-primary-d1 text-105">Invoice was paid on {{invobj.inv_paid_date|date:"M d, Y"}}</span>
                         {% endif %}
