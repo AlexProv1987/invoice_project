@@ -35,7 +35,7 @@ class baselineitemformset(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.queryset = lineitem.objects.none()
-
+       
     def clean(self):
         '''qty cannot be null, product name cannot be duplicated'''
         '''https://docs.djangoproject.com/en/4.1/topics/forms/formsets/    override the clean method '''

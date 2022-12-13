@@ -1,7 +1,8 @@
-body{
-    margin-top:20px;
-    color: #484b51;
+
+html,body{
+  height: 100%
 }
+
 .text-secondary-d1 {
     color: #728299!important;
 }
@@ -114,3 +115,4 @@ hr {
 .align-bottom {
     vertical-align: bottom!important;
 }
+

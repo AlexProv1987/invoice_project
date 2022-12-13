@@ -12,7 +12,7 @@ from django.contrib import messages
 def invoicegen(request):
     if request.method == 'POST':
         newinv = handleinvoicegen(request.POST)
-        generatepdf(newinv.lineitemobj,newinv.invobj)  
+        generatepdf(newinv.lineitemobj,newinv.invobj)
         return redirect('inv-view',newinv.invobj.bus_reltn.bus_name,newinv.invobj.pk)
     invoice = invoiceform()
     lineitems = lineitemformset()
@@ -31,6 +31,7 @@ def downloadpdf(request, bus, pk):
     file = get_object_or_404(invoicefile,inv_reltn=pk)
     return FileResponse(open(file.file_loc, 'rb'), as_attachment=True, content_type='application/pdf')
 
+'''this needs to be one method, use form send something in post req dictating what to do'''
 #updates invoice status
 def updateinvoicestatus(request,bus,pk):
     inv = get_object_or_404(invoice,pk=pk)
