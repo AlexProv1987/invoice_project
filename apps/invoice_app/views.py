@@ -6,9 +6,11 @@ from .controllers.invoicegenerator import handleinvoicegen, generatepdf
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 #view method will be split later, just sticking to one for testing
+@login_required
 def invoicegen(request):
     if request.method == 'POST':
         invoice = invoiceform(request.POST)
