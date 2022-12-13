@@ -4,6 +4,7 @@ from apps.product_app.models import product
 from django.urls import reverse
 from djmoney.models.fields import MoneyField
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 # Create your models here.
 '''
 I am choosing not to cascade anything here for fkey's on delete as a safety precaution for unintentional data loss
@@ -35,6 +36,7 @@ class invoice(models.Model):
     inv_billed_date = models.DateField(null=True)
     inv_paid_date = models.DateField(null=True)
     inv_generated_date=models.DateTimeField(null=True)
+
 class invoicefile(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     inv_slug = models.SlugField(editable=False,null=False, max_length=275, unique=True, default='')
@@ -52,8 +54,8 @@ class invoicefile(models.Model):
         
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
-    product = models.ForeignKey(product,on_delete=models.PROTECT)
-    line_item_qty = models.IntegerField()
+    product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
+    line_item_qty = models.PositiveBigIntegerField(blank=False)
     line_item_amt = MoneyField(
         decimal_places=2,
         default=0,
