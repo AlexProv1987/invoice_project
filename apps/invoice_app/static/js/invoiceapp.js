@@ -1,6 +1,5 @@
 let addButton = document.querySelector("#add-form")
-if(addButton)
-{
+if(addButton){
     let lineitemform = document.querySelectorAll("#lineitem")
     let container = document.querySelector("#form-container")
     let totalForms = document.querySelector("#id_form-TOTAL_FORMS")

@@ -1,9 +1,11 @@
 {% extends './invbase/invbase.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="h-50 d-flex align-items-center justify-content-center mt-50">
+<hr>
+<h1><p class="text-center"><strong>Create Invoice</strong></p></h1>
+<hr>
+<div class="d-flex align-items-center justify-content-center p-10">
 <form id="form-container" method="post">
-    <h2 class="text-justify">Create Invoice</h2>
     {% csrf_token %}
     <div>
     {{ invoice|crispy }}
@@ -11,16 +13,16 @@
     {{ lineitems.management_form }}
     {% for lineitem in lineitems %}
     <div class="row justify-content-center" id="lineitem">
-        <div class="col-6">
+        <div class="col-9">
             {{ lineitem.product|as_crispy_field }}
         </div>  
-        <div class="col-6">
+        <div class="col-3">
         {{lineitem.line_item_qty|as_crispy_field}}
         </div>
     </div>
     {% endfor %}
-    <button id="add-form" class="btn-info" type="button">Add Line Item</button>
-    <button class="btn-success" type="submit" href="invoice-gen" value="Generate">Generate</button>
+    <button id="add-form" class="btn btn-info" type="button">Add Line Item</button>
+    <button class="btn btn-success" type="submit" href="invoice-gen" value="Generate">Generate</button>
 </form> 
 </div>
 {% endblock %}

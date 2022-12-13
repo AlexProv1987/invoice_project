@@ -1,6 +1,6 @@
 {% for message in messages %}
 <div class="container-fluid justify-content-center p-0">
-  <div class="alert {{ message.tags }} alert-sucess text-center" role="alert" >
+  <div class="alert {{ message.tags }} text-center" role="alert" >
     <a type="button" href="{% url 'invoice-gen' %}" class="close" aria-label="Close">
       <span aria-hidden="True">&times;</span>
     </a>

@@ -1,7 +1,27 @@
 
-html,body{
-  height: 100%
-}
+ html,
+ body {
+    margin:0;
+    padding:0;
+    height:100%;
+ }
+ #container {
+    min-height:100%;
+    position:relative;
+ }
+ #header {
+    padding:10px;
+ }
+ #body {
+    padding:10px;
+    padding-bottom:60px;   /* Height of the footer */
+ }
+ #footer {
+    position:sticky;
+    bottom:0;
+    width:100%;
+    height:60px;   /* Height of the footer */
+ }
 
 .text-secondary-d1 {
     color: #728299!important;
@@ -115,4 +135,3 @@ hr {
 .align-bottom {
     vertical-align: bottom!important;
 }
-
