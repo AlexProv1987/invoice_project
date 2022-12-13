@@ -11,9 +11,25 @@ from django.contrib import messages
 #view method will be split later, just sticking to one for testing
 def invoicegen(request):
     if request.method == 'POST':
-        newinv = handleinvoicegen(request.POST)
-        generatepdf(newinv.lineitemobj,newinv.invobj)
-        return redirect('inv-view',newinv.invobj.bus_reltn.bus_name,newinv.invobj.pk)
+        invoice = invoiceform(request.POST)
+        lineitems = lineitemformset(request.POST)
+        if(invoice.is_valid() and lineitems.is_valid()):
+            newinv = handleinvoicegen(request.POST)
+            if newinv.issuccess:
+                generatepdf(newinv.lineitemobj,newinv.invobj)
+                return redirect('inv-view',newinv.invobj.bus_reltn.bus_name,newinv.invobj.pk)
+            else:
+                invoice = invoiceform()
+                lineitems = lineitemformset()
+                context = {'invoice': invoice,'lineitems':lineitems}
+                messages.error(request,'Failed to Save Invoice. Please Contact your System Administrator')
+                return render(request, 'invoicegen.html', context)
+        else:
+            invoice = invoiceform()
+            lineitems = lineitemformset()
+            context = {'invoice': invoice,'lineitems':lineitems}
+            messages.error(request,'Failed to validate Product or Units.')
+            return render(request, 'invoicegen.html', context)
     invoice = invoiceform()
     lineitems = lineitemformset()
     context = {'invoice': invoice,'lineitems':lineitems}
