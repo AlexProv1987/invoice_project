@@ -6,11 +6,12 @@ from .controllers.invoicegenerator import handleinvoicegen, generatepdf
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
 #view method will be split later, just sticking to one for testing
 @login_required
+@permission_required('invoice_app.add_invoice', raise_exception=True)
 def invoicegen(request):
     if request.method == 'POST':
         invoice = invoiceform(request.POST)
@@ -38,6 +39,8 @@ def invoicegen(request):
     return render(request, 'invoicegen.html', context)
 
 #returns invoice obj view
+@login_required
+@permission_required('invoice_app.view_invoice',raise_exception=True)
 def invoicesview(request,bus,pk):
     invobj = get_object_or_404(invoice,pk=pk)
     invli = lineitem.objects.filter(inv_reltn=pk)
@@ -45,12 +48,16 @@ def invoicesview(request,bus,pk):
     return render(request, 'invoiceview.html', context=context)
 
 #get file_loc and return to client
+@login_required
+@permission_required('invoice_app.view_invoicefile',raise_exception=True)
 def downloadpdf(request, bus, pk):
     file = get_object_or_404(invoicefile,inv_reltn=pk)
     return FileResponse(open(file.file_loc, 'rb'), as_attachment=True, content_type='application/pdf')
 
 '''this needs to be one method, use form send something in post req dictating what to do'''
 #updates invoice status
+@login_required
+@permission_required('invoice_app.change_invoice',raise_exception=True)
 def updateinvoicestatus(request,bus,pk):
     inv = get_object_or_404(invoice,pk=pk)
     if inv.inv_status == invoice.Generated:
@@ -70,6 +77,8 @@ def updateinvoicestatus(request,bus,pk):
     return redirect(request.META.get('HTTP_REFERER'))
 
 #set invoice to cancelled
+@login_required
+@permission_required('invoice_app.change_invoice',raise_exception=True)
 def cancelinvoice(request, bus, pk):
     inv = get_object_or_404(invoice,pk=pk)
     inv.inv_status = invoice.Cancelled
