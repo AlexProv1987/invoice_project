@@ -18,8 +18,10 @@ from django.urls import path, include
 from apps.user_app import views
 
 urlpatterns = [
-    path('',views.LoginView,name='login-view'),
+    #change this to a landing page
+    path('',views.LandingPage,name='landing-page'),
     path("admin/", admin.site.urls),
+    path('aboutus/', include('apps.user_app.urls')),
     path('invoiceapp/', include('apps.invoice_app.urls')),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
