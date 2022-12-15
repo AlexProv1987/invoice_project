@@ -5,12 +5,16 @@
 <h1><p class="text-center"><strong>Product Form</strong></p></h1>
 <hr>
 <div class="d-flex h-50 align-items-center justify-content-center p-10">
-  <form method="post">
+  <div class="d-flex h-50 align-items-center justify-content-center p-10">
+    <form method="post" novalidate>
       {% csrf_token %}
-      {{ form|crispy }}
-      <div class="float-right">
-  <input type="submit" class="btn btn-success" value="Save">
-</div>
-  </form>
+      {{ form.p_name|as_crispy_field }}
+      {{ form.p_description|as_crispy_field }}
+      {{ form.p_price|as_crispy_field }}
+      {{ form.p_is_active|as_crispy_field }}
+      {{ form.p_business_reltn|as_crispy_field }}
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+    </form>
+  </div>
 </div>
 {% endblock %}

@@ -7,14 +7,10 @@
   <div class="collapse navbar-collapse" id="navbarsExample04">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'landing-page' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'manage-bus' %}">Home<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Invoice Apps</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'invoice-gen' %}">Create Invoice</a>
-          <a class="dropdown-item" href="#">View Invoices</a>
-        </div>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'invoice-gen' %}">Create Invoice</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Product Apps</a>
@@ -26,9 +22,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Business Apps</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'invoice-gen' %}">Update Business</a>
-          <a class="dropdown-item" href="{% url 'view-products' %}">Add Clients</a>
-          <a class="dropdown-item" href="{% url 'view-products' %}">Update Clients</a>
+          <a class="dropdown-item" href="{% url 'manage-bus' %}">Business Home</a>
+          <a class="dropdown-item" href="{% url 'create-client' %}">Add Clients</a>
+          <a class="dropdown-item" href="{% url 'view-invoices' %}">Invoice Summary</a>
         </div>
       </li>
     </ul>
@@ -41,7 +37,7 @@
   <div class="collapse navbar-collapse" id="navbarsExample04">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'landing-page' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'login-view' %}">Home<span class="sr-only">(current)</span></a>
       </li>
     </ul>
   <ul class="nav navbar-nav navbar-right">
