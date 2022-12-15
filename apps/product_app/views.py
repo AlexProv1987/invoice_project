@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 class addproduct(SuccessMessageMixin,CreateView):
     model = product
     fields = '__all__'
-    template_name='add_product.html'
+    template_name='product_form.html'
     sucess_message = 'Product Created Succesfully'
 
     def get_success_url(self):
@@ -26,7 +26,7 @@ class addproduct(SuccessMessageMixin,CreateView):
 class modifyproduct(SuccessMessageMixin,UpdateView):
     model = product
     fields = '__all__'
-    template_name='update_product.html'
+    template_name='product_form.html'
 
     def get_success_url(self):
         return reverse('view-products')
