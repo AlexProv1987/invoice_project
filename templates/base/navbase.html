@@ -10,15 +10,29 @@
         <a class="nav-link" href="{% url 'landing-page' %}">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">My Apps</a>
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Invoice Apps</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="{% url 'invoice-gen' %}">Create Invoice</a>
           <a class="dropdown-item" href="#">View Invoices</a>
-          <a class="dropdown-item" href="#">Manage Products</a>
-          <a class="dropdown-item" href="#">Manage Clients</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Product Apps</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'view-products' %}">View Products</a>
+          <a class="dropdown-item" href="{% url 'add-product' %}">Add Products</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Business Apps</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'invoice-gen' %}">Update Business</a>
+          <a class="dropdown-item" href="{% url 'view-products' %}">Add Clients</a>
+          <a class="dropdown-item" href="{% url 'view-products' %}">Update Clients</a>
         </div>
       </li>
     </ul>
+    
     <ul class="nav navbar-nav navbar-right">
       <li><a href="{% url 'logout' %}" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>Log Out</a></li>
     </ul>

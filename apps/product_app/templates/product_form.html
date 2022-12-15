@@ -1,9 +1,16 @@
-{% extends 'loginbase/loginbase.html' %}
+{% extends 'productbase/productbase.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+<hr>
+<h1><p class="text-center"><strong>Product Form</strong></p></h1>
+<hr>
+<div class="d-flex h-50 align-items-center justify-content-center p-10">
   <form method="post">
       {% csrf_token %}
       {{ form|crispy }}
-    <input type="submit" value="Save"> 
+      <div class="float-right">
+  <input type="submit" class="btn btn-success" value="Save">
+</div>
   </form>
+</div>
 {% endblock %}
