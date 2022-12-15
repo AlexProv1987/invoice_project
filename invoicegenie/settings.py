@@ -41,10 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
     "apps.business_app",
     "apps.product_app",
     "apps.invoice_app",
+    "apps.payment_app",
+    "apps.user_app",
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 MIDDLEWARE = [
@@ -146,3 +150,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+LOGIN_REDIRECT_URL = "/invoiceapp/invgen"
+LOGOUT_REDIRECT_URL = "/accounts/login"

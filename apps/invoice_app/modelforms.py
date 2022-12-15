@@ -1,7 +1,7 @@
 from django.forms import ModelForm,modelformset_factory, BaseModelFormSet
 from django import forms
 from .models import invoice, lineitem
-
+from django.core.exceptions import ValidationError
 '''option widget selectors'''
 class businessselect(forms.Select):
      def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
@@ -30,11 +30,23 @@ class invoiceform(ModelForm):
             'bus_options': businessselect,
             'client_options': clientselect
         }
+
 #we need to override the BaseModelFormSet constructor as by default well return all line items each time
 class baselineitemformset(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.queryset = lineitem.objects.none()
+
+    #instead of adding required widgets to all formset fields, well validate the quantity here
+    def clean(self):
+        if any(self.errors):
+            return
+        for form in self.forms:
+            qty = form.cleaned_data.get('line_item_qty')
+            if isinstance(qty,int):
+                continue
+            else:
+                raise ValidationError("Units must be greater than zero")
 
 lineitemformset = modelformset_factory(
     lineitem, fields=("product", "line_item_qty"),labels={'product': 'Product','line_item_qty': 'Units'}, extra=1,

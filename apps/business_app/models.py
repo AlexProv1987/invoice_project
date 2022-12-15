@@ -9,6 +9,7 @@ class business(models.Model):
     bus_email = models.EmailField(blank=False, unique=True)
     bus_city = models.CharField(max_length=50, default='')
     bus_state = models.CharField(max_length=50, default='')
+    #add business logo path here
     def __str__(self):
         return self.bus_name
 
@@ -22,3 +23,4 @@ class client(models.Model):
     client_state = models.CharField(max_length=50, default='')
     def __str__(self):
         return self.client_name
+

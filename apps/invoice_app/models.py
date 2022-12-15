@@ -13,11 +13,13 @@ class invoice(models.Model):
     Billed = 2
     Paid = 3
     ReadyToBill = 4
+    Cancelled = 5
     inv_status_choices = (
         (Generated,('Generated')),
         (Billed,('Billed')),
         (Paid,('Paid')),
         (ReadyToBill,('Ready To Bill')),
+        (Cancelled,('Cancelled')),
     )
     bus_reltn = models.ForeignKey(business, on_delete=models.PROTECT)
     client_reltn = models.ForeignKey(client,on_delete=models.PROTECT)
@@ -50,8 +52,8 @@ class invoicefile(models.Model):
         
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
-    product = models.ForeignKey(product,on_delete=models.PROTECT)
-    line_item_qty = models.IntegerField()
+    product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
+    line_item_qty = models.PositiveBigIntegerField(blank=False)
     line_item_amt = MoneyField(
         decimal_places=2,
         default=0,
