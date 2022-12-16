@@ -4,13 +4,10 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.contrib import messages
 from django.urls import reverse
-from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
 from apps.invoice_app.models import invoice
 from .models import business,client
-from django.utils.decorators import method_decorator
 from apps.user_app.models import userassociation
-from django.shortcuts import get_object_or_404
 #done
 class updatebusiness(SuccessMessageMixin,UpdateView):
     model = business
@@ -62,22 +59,29 @@ class invoicedisplay(ListView):
     model = invoice
     fields = '__all__'
     template_name='bus_invs.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        business = userassociation.objects.get(user_reltn=self.request.user.pk)
+        context['business'] = business.business_reltn
+        print(context)
+        return context
 
 class invbyclient(TemplateView):
-    fields = '__all__'
     template_name='invby_client.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
-        clients = client.objects.all()
+        clients = client.objects.get(pk=context['pk'])
+        invoices = invoice.objects.filter(client_reltn=context['pk'])
         context['business'] = business.business_reltn
         context['clients'] = clients
+        context['object_list'] = invoices
         print(context)
         return context
 
 class managebusiness(TemplateView):
-
     template_name= 'business_mngment.html'
     
     def get_context_data(self, **kwargs):
@@ -87,5 +91,5 @@ class managebusiness(TemplateView):
         invoices = invoice.objects.filter(bus_reltn=business.business_reltn.pk)
         context['business'] = business.business_reltn
         context['clients'] = clients
-        context['invoices'] = invoices
+        context['object_list'] = invoices
         return context

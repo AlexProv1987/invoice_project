@@ -31,10 +31,17 @@ class invoice(models.Model):
         default_currency='USD',
         max_digits=11,
     )
+    curr_amt_due = MoneyField(
+        decimal_places=2,
+        default=0,
+        default_currency='USD',
+        max_digits=11,
+    )
     inv_status = models.IntegerField(choices=inv_status_choices)
     inv_billed_date = models.DateField(null=True)
     inv_paid_date = models.DateField(null=True)
     inv_generated_date=models.DateTimeField(null=True)
+
 class invoicefile(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     inv_slug = models.SlugField(editable=False,null=False, max_length=275, unique=True, default='')

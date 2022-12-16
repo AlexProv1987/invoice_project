@@ -23,15 +23,17 @@ class handleinvoicegen():
         biller = business.objects.get(id=self.invoice['bus_reltn'])
         billedto = client.objects.get(id=self.invoice['client_reltn'])
         products_overall_qty = self._gettotalproducts()
+        total_billed = self._gettotalbilled()
         try:
             newinv = invoice.objects.create(
                 bus_reltn = biller,
                 client_reltn = billedto,
                 line_item_cnt = self.postrequest['form-TOTAL_FORMS'],
                 product_qty = products_overall_qty,
-                total_billed = self._gettotalbilled(),
+                total_billed = total_billed,
                 inv_status = invoice.Generated,
                 inv_generated_date = datetime.date.today(),
+                curr_amt_due = total_billed
             )
         except FieldError:
             return False
