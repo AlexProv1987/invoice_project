@@ -8,44 +8,44 @@
   </div>
   <hr>
     {% include 'buscards/buscards.html' %}
-  <div class="row justify-content-center p-3">
-    <div class="col-lg-6">
-      <table class="table table-sm table-striped table-borderless table-hover table-responsive table-scroll text-nowrap w-auto">
-        <thead class="thead-dark th-lg">
-          <tr>
-            <th scope="col">Client</th>
-            <th scope="col">Street</th>
-            <th scope="col">City</th>
-            <th scope="col">State</th>
-            <th scope="col">Zip</th>
-            <th scope="col">Phone</th> 
-            <th scope="col">Email</th>
-            <th class="text-center" scope="col">Edit</th>
-            <th class="text-center w-5" scope="col-">Account</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for client in clients %}
-          <tr>
-            <td>{{ client.client_name }}</td>
-            <td>{{ client.client_street }}</td>
-            <td>{{ client.client_city }}</td>
-            <td>{{ client.client_state }}</td>
-            <td>{{ client.client_zip }}</td>
-            <td>{{ client.client_phone }}</td>
-            <td>{{ client.client_email }}</td>
-            <td class="text-center"><a data-toggle="tooltip" data-placement="top" title="Modify" href="{% url 'update-client' pk=client.pk %}"><i class ="fa fa-pencil fa-lg"></i></a></td>
-            <td class="text-center"><a data-toggle="tooltip" data-placement="top" title="View Billing History" href="{% url 'inv-byclient' pk=client.pk %}"><i class ="fa fa-suitcase"></i></a></td>
-          </tr>
-          {% empty %}
-          <td>No Clients Found</td>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="d-flex justify-content-center p-3 mx-auto">
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Products</h5>
+          <p class="card-text">Edit Products from the view Products link</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'add-product' %}">Add Product</a></li>
+          <li class="list-group-item"><a href="{% url 'view-products' %}">View Products</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="col-lg-6">
-      {% include 'invoicetable.html' %}
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Clients</h5>
+          <p class="card-text">Edit/Manage Clients from the view clients link</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'create-client' %}">Add Client</a></li>
+          <li class="list-group-item"><a href="{% url 'view-clients' %}">View Clients</a></li>
+        </ul>
+      </div>
     </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Invoices</h5>
+          <p class="card-text">Apply payments to invoices from View Invoices as well as view detail</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'invoice-gen' %}">Create Invoice</a></li>
+          <li class="list-group-item"><a href="{% url 'view-invoices' %}">View Invoices</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
 {% endblock %}

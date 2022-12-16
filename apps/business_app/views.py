@@ -93,3 +93,14 @@ class managebusiness(TemplateView):
         context['clients'] = clients
         context['object_list'] = invoices
         return context
+
+class viewclients(ListView):
+    model = client
+    fields = '__all__'
+    template_name = 'view_clients.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        business = userassociation.objects.get(user_reltn=self.request.user.pk)
+        context['business'] = business.business_reltn
+        return context

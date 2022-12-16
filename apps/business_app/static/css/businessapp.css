@@ -22,7 +22,11 @@
     width:100%;
     height:60px;   /* Height of the footer */
  }
-
+ #card {
+   margin: 0 auto !important; /* Added */
+   float: none !important; /* Added */
+   margin-bottom: 10px !important; /* Added */
+}
  p{
    margin-bottom:0 !important
  }
