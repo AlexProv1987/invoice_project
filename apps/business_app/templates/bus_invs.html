@@ -1,52 +1,20 @@
 {% extends 'businessbase/businessbase.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
-<hr>
-<h1><p class="text-center"><strong>Invoice Listing</strong></p></h1>
-<hr>
-<div class="d-flex h-100 align-items-center justify-content-center">
-<div class="d-flex justify-content-center">
-    <p>filters here</p>
-    <p>things here</p>
-</div>
-<div class="d-flex justify-content-center">
-<table class="table table-sm table-striped table-bordered table-hover table-responsive table-scroll text-nowrap">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">INV</th>
-      <th scope="col">Client</th>
-      <th scope="col">LineItems</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Status</th>
-      <th scope="col">Generated</th>
-      <th scope="col">Billed</th>
-      <th scope="col">Paid</th>
-      <th scope="col">Total Billed</th>
-      <th scope="col">View</th>
-      <th scope="col">Download</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for object in object_list %}
-    <tr>
-      <td>{{ object.pk }}</td>
-      <td>{{ object.client_reltn }}</td>
-      <td>{{ object.line_item_cnt }}</td>
-      <td>{{ object.product_qty }}</td>
-      <td>{{ object.get_inv_status_display}}</td>
-      <td>{{ object.inv_generated_date|date:"M d, Y" }}</td>
-      <td>{{ object.inv_billed_date|date:"M d, Y" }}</td>
-      <td>{{ object.inv_paid_date|date:"M d, Y" }}</td>
-      <td>{{ object.total_billed|date:"M d, Y" }}</td>
-      <td class="text-center"><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class ="fa fa-eye fa-lg"></i></a></td>
-      <td class="text-center"><a href="{% url 'download-pdf' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class ="fa fa-cloud-download fa-lg"></i></a></td>
-    </tr>
-    {% empty %}
-    <td>No Invoices Found</td>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="container-fluid p-3">
+    <div class="row">
+    <div class="col">
+    <h1 class="text-center"><p>{{business}} <a href="{% url 'update-business' pk=business.pk%}"><i class ="fa fa-pencil fa-md"></i></a></p></h1>
   </div>
-</div>
+  </div>
+  <hr>
+    {% include 'buscards/buscards.html' %}
+    <div class="row justify-content-center">
+        Filter set here for invoice status
+    </div>
+  <div class="row justify-content-center p-3">
+    <div class="col-lg-6">
+      {% include 'invoicetable.html' %}
+    </div>
+  </div>
 </div>
 {% endblock %}

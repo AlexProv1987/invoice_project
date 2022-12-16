@@ -8,8 +8,8 @@
   </div>
   <hr>
     {% include 'buscards/buscards.html' %}
-  <div class="d-flex justify-content-center p-3">
-    <div class="col-md-6">
+  <div class="row justify-content-center p-3">
+    <div class="col-lg-6">
       <table class="table table-sm table-striped table-borderless table-hover table-responsive table-scroll text-nowrap w-auto">
         <thead class="thead-dark th-lg">
           <tr>
@@ -43,43 +43,8 @@
         </tbody>
       </table>
     </div>
-    <div class="col-md-6">
-      <table class="table table-sm table-striped table-borderless table-hover table-responsive table-scroll text-nowrap">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">INV</th>
-            <th scope="col">Client</th>
-            <th scope="col">LineItems</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Status</th>
-            <th scope="col">Generated</th>
-            <th scope="col">Billed</th>
-            <th scope="col">Paid</th>
-            <th scope="col">Total Billed</th>
-            <th scope="col">View</th>
-            <th scope="col">Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for invoice in invoices %}
-          <tr>
-            <td>{{ invoice.pk }}</td>
-            <td>{{ invoice.client_reltn }}</td>
-            <td>{{ invoice.line_item_cnt }}</td>
-            <td>{{ invoice.product_qty }}</td>
-            <td>{{ invoice.get_inv_status_display}}</td>
-            <td>{{ invoice.inv_generated_date|date:"M d, Y" }}</td>
-            <td>{{ invoice.inv_billed_date|date:"M d, Y" }}</td>
-            <td>{{ invoice.inv_paid_date|date:"M d, Y" }}</td>
-            <td>{{ invoice.total_billed|date:"M d, Y" }}</td>
-            <td class="text-center"><a href="{% url 'inv-view' bus=invoice.bus_reltn.bus_name pk=invoice.pk %}"><i class ="fa fa-eye fa-lg"></i></a></td>
-            <td class="text-center"><a href="{% url 'download-pdf' bus=invoice.bus_reltn.bus_name pk=invoice.pk %}"><i class ="fa fa-cloud-download fa-lg"></i></a></td>
-          </tr>
-          {% empty %}
-          <td>No Invoices Found</td>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="col-lg-6">
+      {% include 'invoicetable.html' %}
     </div>
 </div>
 </div>

@@ -23,6 +23,9 @@
     height:60px;   /* Height of the footer */
  }
 
+ p{
+   margin-bottom:0 !important
+ }
  .card {
    background-color: #fff;
    border-radius: 10px;
