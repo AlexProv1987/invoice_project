@@ -9,7 +9,7 @@
   <hr>
     {% include 'buscards/buscards.html' %}
     <div class="row justify-content-center">
-        Filter set here for invoice status
+        Filter set here for clients
     </div>
   <div class="row justify-content-center p-3">
     <div class="col-auto">
@@ -37,8 +37,8 @@
             <td>{{ object.client_zip }}</td>
             <td>{{ object.client_phone }}</td>
             <td>{{ object.client_email }}</td>
-            <td class="text-center"><a href="{% url 'update-client' pk=object.pk %}"><i class ="fa fa-eye fa-lg"></i></a></td>
-            <td class="text-center"><a href="{% url 'inv-byclient' pk=object.pk %}"><i class ="fa fa-cloud-download fa-lg"></i></a></td>
+            <td class="text-center"><a href="{% url 'update-client' pk=object.pk %}"><i class ="fa fa-pencil fa-md"></i></a></td>
+            <td class="text-center"><a href="{% url 'inv-byclient' pk=object.pk %}"><i class ="fa fa-folder fa-lg"></i></a></td>
           </tr>
           {% empty %}
           <td>No Invoices Found</td>

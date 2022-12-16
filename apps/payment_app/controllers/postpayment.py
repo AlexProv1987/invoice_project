@@ -1,3 +1,4 @@
 class postpayment():
-    def __init__(self) -> None:
-        pass
+    def __init__(self, request) -> None:
+        self.post = request
+    
