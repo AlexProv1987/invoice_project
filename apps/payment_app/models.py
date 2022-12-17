@@ -15,5 +15,7 @@ class payment(models.Model):
         default=0,
         default_currency='USD',
         max_digits=11,
+        verbose_name='Amount'
     )
-    payment_type = models.IntegerField(choices=payment_type_choices)
+    payment_type = models.IntegerField(choices=payment_type_choices, verbose_name='Type')
+    posted_date = models.DateField(auto_now_add=True)
