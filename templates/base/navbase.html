@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <span class="navbar-brand mb-0 h1">InvGenie</span>
+  <span class="navbar-brand mb-0 h1">Billing Buddy</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,18 +7,27 @@
   <div class="collapse navbar-collapse" id="navbarsExample04">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'landing-page' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'manage-bus' %}">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'invoice-gen' %}">Create Invoice</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">My Apps</a>
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Product Apps</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'invoice-gen' %}">Create Invoice</a>
-          <a class="dropdown-item" href="#">View Invoices</a>
-          <a class="dropdown-item" href="#">Manage Products</a>
-          <a class="dropdown-item" href="#">Manage Clients</a>
+          <a class="dropdown-item" href="{% url 'view-products' %}">View Products</a>
+          <a class="dropdown-item" href="{% url 'add-product' %}">Add Products</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Business Apps</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'create-client' %}">Add Clients</a>
+          <a class="dropdown-item" href="{% url 'view-invoices' %}">View Invoices</a>
         </div>
       </li>
     </ul>
+    
     <ul class="nav navbar-nav navbar-right">
       <li><a href="{% url 'logout' %}" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>Log Out</a></li>
     </ul>
@@ -27,7 +36,7 @@
   <div class="collapse navbar-collapse" id="navbarsExample04">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'landing-page' %}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'login-view' %}">Home<span class="sr-only">(current)</span></a>
       </li>
     </ul>
   <ul class="nav navbar-nav navbar-right">

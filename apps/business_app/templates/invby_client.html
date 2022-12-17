@@ -1,0 +1,68 @@
+{% extends 'businessbase/businessbase.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <h1>
+            <p>{{business}} <a href="{% url 'update-business' pk=business.pk%}"><i class="fa fa-pencil fa-md"></i></a>
+            </p>
+        </h1>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{clients.client_name}} <a href="{% url 'update-client' pk=clients.pk%}"><i
+                                class="fa fa-pencil fa-md"></i></a></h5>
+                    <p class="card-text">
+                        {{clients.client_street}}
+                    <p class="card-text">
+                        {{clients.client_city}}, {{clients.client_state}}
+                    </p>
+                    <p class="card-text">
+                        {{clients.client_zip}}
+                    </p>
+                    <p class="card-text">
+                        {{clients.client_email}}
+                    </p>
+                    <p class="card-text">
+                        {{clients.client_phone}}
+                    </p>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Billing History</h5>
+                    <p class="card-text">
+                        Total Billed: $$$$$$$$$
+                    </p>
+                    <p class="card-text">
+                        Balance Due: $$$$$$$$$$
+                    </p>
+                    <p class="card-text">
+                        Payments: $$$$$$$$$$$$
+                    </p>
+                    <p class="card-text">
+                        Past Due: $$$$$$$$$$
+                    </p>
+                    <p class="card-text">
+                        Products Purchased: XXX
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    Filter set here for invoice status
+</div>
+<div class="row justify-content-center p-3">
+    <div class="col-auto">
+        {% include 'invoicetable.html' %}
+    </div>
+</div>
+</div>
+{% endblock %}

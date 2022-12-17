@@ -3,7 +3,7 @@ from djmoney.models.fields import MoneyField
 from apps.business_app.models import business
 # Create your models here.
 class product(models.Model):
-    p_name = models.CharField(max_length=50, verbose_name='Product')
+    p_name = models.CharField(max_length=50, verbose_name='Product Name', unique=True)
     p_description = models.CharField(max_length=125, verbose_name='Description')
     p_price = MoneyField(
         decimal_places=2,

@@ -135,3 +135,7 @@ hr {
 .align-bottom {
     vertical-align: bottom!important;
 }
+
+td{
+    width: 9% !important;
+}

@@ -1,19 +1,45 @@
 {% extends 'productbase/productbase.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<ul>
-  <!-- Iterate over object_list -->
-  {% for object in object_list %}
-  <!-- Display Objects -->
-  <li>{{ object.p_name }}</li>
-  <li>{{ object.p_description }}</li>
-  <li>{{ object.p_price }}</li>
-  <li>{{ object.p_is_active }}</li>
-  <li>{{ object.p_business_reltn }}</li>
-  <hr/>
-  <!-- If object_list is empty  -->
-  {% empty %}
-  <li>No objects yet.</li>
-  {% endfor %}
-</ul>
+<hr>
+<h1><p class="text-center"><strong>All Products</strong></p></h1>
+<hr>
+<div class="d-flex h-100 align-items-center justify-content-center">
+  <div>
+    <div class="d-flex justify-content-center">
+      <p>filters here</p>
+    </div>
+  <div class="d-flex justify-content-center">
+<table class="table table-sm table-striped table-bordered table-hover table-responsive table-scroll text-nowrap">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Desc.</th>
+      <th scope="col">Price</th>
+      <th scope="col">In Stock</th>
+      <th scope="col">Seller</th>
+      <th class="text-center" scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+    <tr>
+      <td>{{ object.p_name }}</td>
+      <td>{{ object.p_description }}</td>
+      <td>{{ object.p_price }}</td>
+      <td>{{ object.p_is_active }}</td>
+      <td>{{ object.p_business_reltn }}</td>
+      <td class="text-center"><a href="{% url 'update-product' pk=object.pk %}"><i class ="fa fa-pencil fa-lg"></i></a></td>
+    </tr>
+    {% empty %}
+    <td>No Products Found</td>
+    {% endfor %}
+  </tbody>
+</table>
+  </div>
+<div class="d-flex justify-content-end">
+  <a class="btn btn-success" href="{% url 'add-product' %}" class="btn btn-primary">Add Product</a>
+</div>
+</div>
+</div>
 {% endblock %}

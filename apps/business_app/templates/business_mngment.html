@@ -1,0 +1,52 @@
+{% extends 'businessbase/businessbase.html' %}
+{% block content %}
+<div class="container-fluid p-3">
+  <div class="row">
+    <div class="col">
+    <h1 class="text-center"><p>{{business}} <a href="{% url 'update-business' pk=business.pk%}"><i class ="fa fa-pencil fa-md"></i></a></p></h1>
+  </div>
+  </div>
+  <hr>
+    {% include 'buscards/buscards.html' %}
+    <hr>
+  <div class="d-flex justify-content-center p-5 mx-auto">
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Products</h5>
+          <p class="card-text">Edit Products from the view Products link</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'add-product' %}">Add Product</a></li>
+          <li class="list-group-item"><a href="{% url 'view-products' %}">View Products</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Clients</h5>
+          <p class="card-text">Edit/Manage Clients from the view clients link</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'create-client' %}">Add Client</a></li>
+          <li class="list-group-item"><a href="{% url 'view-clients' %}">View Clients</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card" id="linkcard" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Invoices</h5>
+          <p class="card-text">Apply payments to invoices from View Invoices as well as view detail</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{% url 'invoice-gen' %}">Create Invoice</a></li>
+          <li class="list-group-item"><a href="{% url 'view-invoices' %}">View Invoices</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
