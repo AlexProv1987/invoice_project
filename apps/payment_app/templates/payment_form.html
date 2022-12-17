@@ -6,9 +6,9 @@
 <hr>
 <div class="d-flex h-50 align-items-center justify-content-center p-10">
   <div class="d-flex h-50 align-items-center justify-content-center p-10">
-    <form method="post" novalidate>
+    <form method="post">
       {% csrf_token %}
-      {{ form.invoice_reltn |as_crispy_field }}
+      {{ form.invoice_reltn.as_hidden  }}
       {{ form.payment_amt |as_crispy_field }}
       {{ form.payment_type |as_crispy_field }}
       <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>

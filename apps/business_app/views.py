@@ -64,12 +64,11 @@ class invoicedisplay(ListView):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
         context['business'] = business.business_reltn
-        print(context)
         return context
 
 class invbyclient(TemplateView):
     template_name='invby_client.html'
-
+ 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
