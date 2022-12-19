@@ -1,12 +1,13 @@
 
 from django.views.generic.edit import UpdateView,CreateView
-from django.views.generic.list import ListView
+from django_filters.views import FilterView
 from django.views.generic.base import TemplateView
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from apps.invoice_app.models import invoice
 from .models import business,client
+from .businessapp_filters import clientfilter, invoicefilter
 from apps.user_app.models import userassociation
 #done
 class updatebusiness(SuccessMessageMixin,UpdateView):
@@ -55,28 +56,26 @@ class createclient(SuccessMessageMixin,CreateView):
             messages.success(self.request, success_message)
         return response     
 
-class invoicedisplay(ListView):
-    model = invoice
-    fields = '__all__'
+class invoicedisplay(FilterView):
+    queryset=invoice.objects.all()
     template_name='bus_invs.html'
-    
+    filterset_class=invoicefilter
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
         context['business'] = business.business_reltn
         return context
 
-class invbyclient(TemplateView):
+class invbyclient(FilterView):
     template_name='invby_client.html'
- 
+    filterset_class=invoicefilter
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
-        clients = client.objects.get(pk=context['pk'])
-        invoices = invoice.objects.filter(client_reltn=context['pk'])
+        clients = client.objects.get(pk=self.kwargs['pk'])
+        self.queryset = invoice.objects.filter(client_reltn=clients)
         context['business'] = business.business_reltn
         context['clients'] = clients
-        context['object_list'] = invoices
         print(context)
         return context
 
@@ -93,11 +92,10 @@ class managebusiness(TemplateView):
         context['object_list'] = invoices
         return context
 
-class viewclients(ListView):
-    model = client
-    fields = '__all__'
+class viewclients(FilterView):
+    queryset=client.objects.all()
     template_name = 'view_clients.html'
-
+    filterset_class=clientfilter
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
