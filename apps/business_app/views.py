@@ -31,7 +31,7 @@ class modifyclient(SuccessMessageMixin,UpdateView):
     template_name='client_form.html'
 
     def get_success_url(self):
-        return reverse('manage-bus')
+        return reverse('view-clients')
 
     def form_valid(self, form):
         response = super().form_valid(form)

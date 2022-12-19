@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "crispy_forms",
+    "django_filters",
     "apps.business_app",
     "apps.product_app",
     "apps.invoice_app",

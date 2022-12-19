@@ -16,7 +16,6 @@ class addproduct(SuccessMessageMixin,CreateView):
     sucess_message = 'Product Created Succesfully'
 
     def get_success_url(self):
-        print(self.request.META.get('HTTP_REFERER'))
         return reverse('view-products')
 
     def form_valid(self, form):
