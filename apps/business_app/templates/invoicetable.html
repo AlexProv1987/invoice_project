@@ -1,40 +1,43 @@
 <table class="table table-lg table-striped table-borderless table-hover table-responsive table-scroll text-nowrap">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">INV</th>
-        <th scope="col">Client</th>
-        <th scope="col">LineItems</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Status</th>
-        <th scope="col">Generated</th>
-        <th scope="col">Billed</th>
-        <th scope="col">Paid</th>
-        <th scope="col">Total Billed</th>
-        <th scope="col">Amount Due</th>
-        <th scope="col">View</th>
-        <th scope="col">Download</th>
-        <th scope="col">Payment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for object in object_list %}
-      <tr>
-        <td>{{ object.pk }}</td>
-        <td>{{ object.client_reltn }}</td>
-        <td>{{ object.line_item_cnt }}</td>
-        <td>{{ object.product_qty }}</td>
-        <td>{{ object.get_inv_status_display}}</td>
-        <td>{{ object.inv_generated_date|date:"M d, Y" }}</td>
-        <td>{{ object.inv_billed_date|date:"M d, Y" }}</td>
-        <td>{{ object.inv_paid_date|date:"M d, Y" }}</td>
-        <td>{{ object.total_billed }}</td>
-        <td>{{ object.curr_amt_due }}</td>
-        <td class="text-center"><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class ="fa fa-eye fa-lg"></i></a></td>
-        <td class="text-center"><a href="{% url 'download-pdf' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class ="fa fa-cloud-download fa-lg"></i></a></td>
-        <td class="text-center"><a href="{% url 'make-payment' pk=object.pk %}"><i class ="fa  fa-money fa-lg"></i></a></td>
-      </tr>
-      {% empty %}
-      <td>No Invoices Found</td>
-      {% endfor %}
-    </tbody>
-  </table>
+  <thead class="thead-dark table-head">
+    <tr>
+      <th scope="col">INV</th>
+      <th scope="col">Client</th>
+      <th scope="col">LineItems</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Status</th>
+      <th scope="col">Generated</th>
+      <th scope="col">Billed</th>
+      <th scope="col">Paid</th>
+      <th scope="col">Total Billed</th>
+      <th scope="col">Amount Due</th>
+      <th scope="col">View</th>
+      <th scope="col">Download</th>
+      <th scope="col">Payment</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+    <tr>
+      <td>{{ object.pk }}</td>
+      <td>{{ object.client_reltn }}</td>
+      <td>{{ object.line_item_cnt }}</td>
+      <td>{{ object.product_qty }}</td>
+      <td>{{ object.get_inv_status_display}}</td>
+      <td>{{ object.inv_generated_date|date:"M d, Y" }}</td>
+      <td>{{ object.inv_billed_date|date:"M d, Y" }}</td>
+      <td>{{ object.inv_paid_date|date:"M d, Y" }}</td>
+      <td>{{ object.total_billed }}</td>
+      <td>{{ object.curr_amt_due }}</td>
+      <td class="text-center"><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i
+            class="fa fa-eye fa-lg"></i></a></td>
+      <td class="text-center"><a href="{% url 'download-pdf' bus=object.bus_reltn.bus_name pk=object.pk %}"><i
+            class="fa fa-cloud-download fa-lg"></i></a></td>
+      <td class="text-center"><a href="{% url 'make-payment' pk=object.pk %}"><i class="fa  fa-money fa-lg"></i></a>
+      </td>
+    </tr>
+    {% empty %}
+    <td>No Invoices Found</td>
+    {% endfor %}
+  </tbody>
+</table>

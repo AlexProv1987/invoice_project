@@ -8,5 +8,5 @@ urlpatterns = [
     path('createclient/',createclient.as_view(),name='create-client'),
     path('businvoices/',invoicedisplay.as_view(),name='view-invoices'),
     path('invbyclient/<int:pk>',invbyclient.as_view(), name='inv-byclient'),
-    path('clientlist', viewclients.as_view(), name='view-clients')
+    path('clientlist/', viewclients.as_view(), name='view-clients')
 ]

@@ -11,11 +11,22 @@
  #header {
     padding:10px;
  }
+ .table-head{
+   position:sticky;
+   top: 0 ;
+}
  #body {
     padding:10px;
     padding-bottom:60px;   /* Height of the footer */
  }
- 
+.my-custom-scrollbar {
+   position: relative;
+   height: 360px;
+   overflow: auto;
+   }
+.table-wrapper-scroll-y {
+   display: block;
+   }
  #footer {
     position:sticky;
     bottom:0;
