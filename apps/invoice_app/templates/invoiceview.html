@@ -131,7 +131,7 @@
                         <a href="{% url 'cancel-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-danger px-4 float-right mt-3 mt-lg-0 mr-2">Cancel</a>
                         {% elif invobj.inv_status == 2 %}
                         <span class="text-primary-d1 text-105">Invoice was Billed on {{invobj.inv_billed_date|date:"M d, Y"}}</span>
-                        <a id="submit" href="{% url 'modify-inv' bus=invobj.bus_reltn.bus_name pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Post Payment</a>
+                        <a id="submit" href="{% url 'make-payment' pk=invobj.pk %}" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">Post Payment</a>
                         {% elif invobj.inv_status == 3 %}
                         <span class="text-primary-d1 text-105">Invoice was paid on {{invobj.inv_paid_date|date:"M d, Y"}}</span>
                         {% endif %}

@@ -9,6 +9,7 @@
       <form class="form-inline">
         <div class="form-group mb-2 p-1">
           {{filter.form.product_name | as_crispy_field}}
+          {{filter.form.in_stock | as_crispy_field}}
         </div>
         <button type="submit" class="btn btn-primary mb-2">Search</button>
       </form>

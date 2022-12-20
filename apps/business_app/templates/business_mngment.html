@@ -3,12 +3,14 @@
 <div class="container-fluid p-3">
   <div class="row">
     <div class="col">
-    <h1 class="text-center"><p>{{business}} <a href="{% url 'update-business' pk=business.pk%}"><i class ="fa fa-pencil fa-md"></i></a></p></h1>
-  </div>
+      <h1 class="text-center">
+        <p>{{business}} <a href="{% url 'update-business' pk=business.pk%}"><i class="fa fa-pencil fa-md"></i></a></p>
+      </h1>
+    </div>
   </div>
   <hr>
-    {% include 'buscards/buscards.html' %}
-    <hr>
+  {% include 'buscards/buscards.html' %}
+  <hr>
   <div class="d-flex justify-content-center p-5 mx-auto">
     <div class="col d-flex justify-content-center">
       <div class="card" id="linkcard" style="width: 18rem;">
