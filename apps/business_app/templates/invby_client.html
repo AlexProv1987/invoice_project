@@ -56,21 +56,22 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row justify-content-center">
+<div class="row justify-content-center mb-2">
     <form class="form-inline">
         <div class="form-group m-2 p-1">
-            {{filter.form.invoice_nbr | as_crispy_field}}
-            {{filter.form.invoice_status | as_crispy_field}}
-            {{filter.form.invoice_remaining_amt | as_crispy_field}}
+          {{filter.form.invoice_nbr | as_crispy_field}}
+          {{filter.form.invoice_status | as_crispy_field}}
+          {{filter.form.invoice_remaining_amt | as_crispy_field}}
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Search</button>
-    </form>
+        <button type="submit" class="btn btn-primary mb-2 ">Search</button>
+      </form>
 </div>
-<div class="row justify-content-center p-3">
-    <div class="col-auto">
+<div class="d-flex justify-content-center table-wrapper-scroll-y my-custom-scrollbar mb-2">
         {% include 'invoicetable.html' %}
-    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success" href="{% url 'invoice-gen' %}" class="btn btn-primary">Create Invoice</a>
+  </div>
 </div>
 </div>
 {% endblock %}

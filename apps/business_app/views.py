@@ -76,7 +76,6 @@ class invbyclient(FilterView):
         self.queryset = invoice.objects.filter(client_reltn=clients)
         context['business'] = business.business_reltn
         context['clients'] = clients
-        print(context)
         return context
 
 class managebusiness(TemplateView):
@@ -85,11 +84,7 @@ class managebusiness(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
-        clients = client.objects.all()
-        invoices = invoice.objects.filter(bus_reltn=business.business_reltn.pk)
         context['business'] = business.business_reltn
-        context['clients'] = clients
-        context['object_list'] = invoices
         return context
 
 class viewclients(FilterView):
