@@ -11,8 +11,8 @@ class clientfilter(FilterSet):
 class invoicefilter(FilterSet):
     invoice_status = filters.ChoiceFilter(field_name='inv_status',lookup_expr='icontains', choices=invoice.inv_status_choices,empty_label='----------',label='Status')
     invoice_nbr = filters.NumberFilter(field_name='id', lookup_expr='exact', label='Invoice#')
-    invoice_client = filters.ModelChoiceFilter(queryset=client.objects.all(), label='Client')
-    invoice_remaining_amt = filters.NumberFilter(field_name='curr_amt_due',lookup_expr='lte', label='Amount Due: ')
+    invoice_client = filters.ModelChoiceFilter(field_name='client_reltn', queryset=client.objects.all(), label='Client')
+    invoice_remaining_amt = filters.NumberFilter(field_name='curr_amt_due',lookup_expr='gte', label='Amount Due: ')
     class Meta:
         model = invoice
         fields=[]

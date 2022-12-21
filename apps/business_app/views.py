@@ -47,7 +47,7 @@ class createclient(SuccessMessageMixin,CreateView):
 
     def get_success_url(self):
         print(self.request.META.get('HTTP_REFERER'))
-        return reverse('manage-bus')
+        return reverse('view-clients')
 
     def form_valid(self, form):
         response = super().form_valid(form)

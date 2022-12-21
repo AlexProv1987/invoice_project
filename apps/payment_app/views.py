@@ -22,9 +22,15 @@ class makepayment(SuccessMessageMixin,CreateView):
         return reverse('view-invoices')
 
     def form_valid(self, form):
+        #we need to understand form_valid more grab the object it creates in case we fail applying it to the invoice curr amt due
         response = super().form_valid(form)
-        #postpayment(self.request.POST)
-        success_message = f"Payment Of ${self.request.POST['payment_amt_0']} Applied to INV#{self.request.POST['invoice_reltn']}"
-        if success_message:
-            messages.success(self.request, success_message)
-        return response
+        postpmt = postpayment(self.request.POST)
+        if postpmt._postpayment():
+            success_message = f"Payment Of ${self.request.POST['payment_amt_0']} Applied to INV#{self.request.POST['invoice_reltn']}"
+            if success_message:
+                messages.success(self.request, success_message)
+            return response
+        else: 
+            messages.error(self.request,postpmt.return_message)
+            return response
+            
