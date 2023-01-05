@@ -33,10 +33,8 @@ class Command(BaseCommand):
             inv.bus_reltn.bus_email,
             [inv.client_reltn.client_email],
             )
-            email.attach_file(inv_file.file_loc)
+            email.attach_file(pdf)
             mail_list.append(email)
-            #print(pdf)
-            #print(inv.pk, inv.client_reltn.client_email)
         return mail_list
 
     def _massmail(self, messages):
