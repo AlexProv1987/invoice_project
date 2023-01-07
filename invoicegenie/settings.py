@@ -25,7 +25,7 @@ SECRET_KEY = os.environ('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['invoice-project-test-aprovenz.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.eba-e3pbeibn.us-west-2.elasticbeanstalk.com']
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
