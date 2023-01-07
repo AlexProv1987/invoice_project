@@ -17,10 +17,11 @@ class client(models.Model):
     client_name = models.CharField(max_length=75, unique=True)
     client_street = models.CharField(max_length=50)
     client_zip = models.IntegerField(blank=False)
-    client_phone = PhoneNumberField(blank=True, unique=True)
+    client_phone = PhoneNumberField(blank=True)
     client_email = models.EmailField(blank=False, unique=True)
     client_city = models.CharField(max_length=50, default='')
     client_state = USStateField()
+    client_bus_reltn = models.ForeignKey(business,on_delete=models.CASCADE)
     def __str__(self):
         return self.client_name
 

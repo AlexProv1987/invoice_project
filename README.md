@@ -18,5 +18,5 @@ Product -> fkey Business
 UserAssociations -> fkey Business and User
 
 This is an active WIP -> all logic is subject to change.
-
+Trello is being used for project management (Currently Private)
 

@@ -33,7 +33,7 @@
       <td>{{ object.p_name }}</td>
       <td>{{ object.p_description }}</td>
       <td>{{ object.p_price }}</td>
-      <td>{{ object.p_is_active }}</td>
+      <td>{{ object.get_p_instock_display}}</td>
       <td>{{ object.p_business_reltn }}</td>
       <td class="text-center"><a href="{% url 'update-product' pk=object.pk %}"><i class ="fa fa-pencil fa-lg"></i></a></td>
     </tr>

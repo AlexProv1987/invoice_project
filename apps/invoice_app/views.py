@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 #view method will be split later, just sticking to one for testing
@@ -73,7 +74,7 @@ def updateinvoicestatus(request,bus,pk):
         inv.inv_status = invoice.Paid
         inv.inv_paid_date = datetime.date.today()
         inv.save()
-        messages.success(request,f'INV{pk} For {inv.bus_reltn.bus_name} Set To {inv.get_inv_status_display()}.')
+        messages.success(request,f'INV{pk} For {inv.bus_reltn.bus_name} Set To {inv.get_inv_status_display()}.')  
     return redirect('manage-bus')
 
 #set invoice to cancelled
