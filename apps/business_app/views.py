@@ -73,7 +73,7 @@ class invbyclient(FilterView):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
         clients = client.objects.get(pk=self.kwargs['pk'])
-        self.queryset = invoice.objects.filter(client_reltn=clients)
+        self.queryset = invoice.objects.filter(client_reltn=clients.pk)
         context['business'] = business.business_reltn
         context['clients'] = clients
         return context
