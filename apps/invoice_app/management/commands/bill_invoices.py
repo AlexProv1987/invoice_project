@@ -23,17 +23,19 @@ class Command(BaseCommand):
     def _createemails(self, rtb_inv, rtb_file):
         mail_list = []
         for inv in rtb_inv:
+            '''
             for inv_file in rtb_file:
                 if inv_file.inv_reltn.pk == inv.pk:
                     pdf = inv_file.file_loc
                     break
+            '''
             email = mail.EmailMessage (
             f'Invoice From {inv.bus_reltn.bus_name}', 
             f'Hello, {inv.client_reltn.client_name}. You have an invoice with a balance due of: {inv.total_billed}. Please See Attachment.',
             inv.bus_reltn.bus_email,
             [inv.client_reltn.client_email],
             )
-            email.attach_file(pdf)
+            #email.attach_file(pdf)
             mail_list.append(email)
         return mail_list
 
