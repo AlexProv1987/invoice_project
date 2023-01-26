@@ -35,7 +35,7 @@ class modifyclient(SuccessMessageMixin,UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        success_message = success_message = f"{self.request.POST['client_name']} Updated Succesfully"
+        success_message = f"{self.request.POST['client_name']} Updated Succesfully"
         if success_message:
             messages.success(self.request, success_message)
         return response
