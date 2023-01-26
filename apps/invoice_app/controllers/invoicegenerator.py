@@ -153,10 +153,9 @@ class generatepdf():
     def __init__(self, liobj, invobj):
         self.inv = invobj
         self.lineitems = liobj
-        self.invfile = invoicefile.objects.none()
-        self.pdf_file_nm = f'{self.inv.pk}_{self.inv.bus_reltn.bus_name}.pdf'
-        self._pdfgeneration()
-        
+        #self.invfile = invoicefile.objects.none()
+        #self.pdf_file_nm = f'{self.inv.pk}_{self.inv.bus_reltn.bus_name}.pdf'
+        self.pdf = self._pdfgeneration()
     def _pdfgeneration(self):
         pdf = custFPDF(orientation='P', unit= 'mm', format='A4', invobj=self.inv)
         #add page calls add header/footer
@@ -210,16 +209,7 @@ class generatepdf():
         pdf.cell(100,0, "Please pay to Robertson's Enterprises.", ln=1)
         pdf.ln(5)
         pdf.cell(100,0, "Thank you for your business.", ln=1)
-        pdf.output(f'./pdf_dir/{self.pdf_file_nm}', 'F')
-        self._savepdf()
-        return 
-
-    def _savepdf(self) -> invoicefile:
-        self.invfile = invoicefile.objects.create(
-            inv_reltn = self.inv,
-            file_loc = f'./pdf_dir/{self.pdf_file_nm}'
-        )
-        
+        return pdf
 
 '''
 EX postreq

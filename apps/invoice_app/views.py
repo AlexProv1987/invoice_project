@@ -8,6 +8,7 @@ from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseRedirect
+import io
 # Create your views here.
 
 #view method will be split later, just sticking to one for testing
@@ -20,7 +21,7 @@ def invoicegen(request):
         if(invoice.is_valid() and lineitems.is_valid()):
             newinv = handleinvoicegen(request.POST)
             if newinv.issuccess:
-                generatepdf(newinv.lineitemobj,newinv.invobj)
+                #generatepdf(newinv.lineitemobj,newinv.invobj)
                 return redirect('inv-view',newinv.invobj.bus_reltn.bus_name,newinv.invobj.pk)
             else:
                 invoice = invoiceform()
@@ -48,12 +49,17 @@ def invoicesview(request,bus,pk):
     context = {'invobj': invobj, 'invli':invli}
     return render(request, 'invoiceview.html', context=context)
 
-#get file_loc and return to client
+#return file utilizing buffer as the file
 @login_required
 @permission_required('invoice_app.view_invoicefile',raise_exception=True)
 def downloadpdf(request, bus, pk):
-    file = get_object_or_404(invoicefile,inv_reltn=pk)
-    return FileResponse(open(file.file_loc, 'rb'), as_attachment=True, content_type='application/pdf')
+    buffer = io.BytesIO()
+    inv=invoice.objects.get(pk=pk)
+    invli=lineitem.objects.filter(inv_reltn=inv)
+    pdf = generatepdf(invli,inv)
+    pdf.pdf.output(buffer)
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, content_type='application/pdf')
 
 '''this needs to be one method, use form send something in post req dictating what to do'''
 #updates invoice status
