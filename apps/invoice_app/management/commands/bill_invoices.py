@@ -35,7 +35,6 @@ class Command(BaseCommand):
             inv.bus_reltn.bus_email,
             [inv.client_reltn.client_email],
             )
-            #email.attach_file(pdf)
             mail_list.append(email)
         return mail_list
 
