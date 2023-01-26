@@ -13,19 +13,25 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
+env = environ.Env()
+environ.Env.read_env()
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
+else:
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.eba-e3pbeibn.us-west-2.elasticbeanstalk.com','127.0.0.1']
+
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
@@ -99,6 +105,17 @@ if 'RDS_DB_NAME' in os.environ:
             'PASSWORD': os.environ['RDS_PASSWORD'],
             'HOST': os.environ['RDS_HOSTNAME'],
             'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+      DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('RDS_DB_NAME'),
+            'USER': os.environ.get('RDS_USERNAME'),
+            'PASSWORD': os.environ.get('RDS_PASSWORD'),
+            'HOST': os.environ.get('RDS_HOSTNAME'),
+            'PORT': os.environ.get('RDS_PORT'),
         }
     }
 

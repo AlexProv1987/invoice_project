@@ -69,11 +69,18 @@ class invoicedisplay(FilterView):
 class invbyclient(FilterView):
     template_name='invby_client.html'
     filterset_class=invoicefilter
+
+    def get(self,request,*args,**kwargs):
+        filterset_class = self.get_filterset_class()
+        self.filterset = self.get_filterset(filterset_class)
+        self.object_list = invoice.objects.filter(client_reltn=self.kwargs['pk'])
+        context=self.get_context_data(filter=self.filterset,object_list=self.object_list)
+        return self.render_to_response(context)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         business = userassociation.objects.get(user_reltn=self.request.user.pk)
         clients = client.objects.get(pk=self.kwargs['pk'])
-        self.queryset = invoice.objects.filter(client_reltn=clients.pk)
         context['business'] = business.business_reltn
         context['clients'] = clients
         return context
