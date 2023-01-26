@@ -28,9 +28,10 @@ else:
     print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['invoice-project-aprovenz-test.eba-e3pbeibn.us-west-2.elasticbeanstalk.com','127.0.0.1']
+
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
