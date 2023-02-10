@@ -38,15 +38,16 @@ class invoice(models.Model):
         max_digits=11,
     )
     inv_status = models.IntegerField(choices=inv_status_choices)
-    inv_billed_date = models.DateField(null=True)
-    inv_paid_date = models.DateField(null=True)
-    inv_generated_date=models.DateTimeField(null=True)
+    inv_billed_date = models.DateField(blank=True)
+    inv_paid_date = models.DateField(blank=True)
+    inv_generated_date=models.DateTimeField(blank=False)
 
+''' Unused we will generate a PDF on demand
 class invoicefile(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     inv_slug = models.SlugField(editable=False,null=False, max_length=275, unique=True, default='')
     file_loc = models.CharField(max_length=150, blank=False)
-    '''Slug field is currently unused here, leaving impleneted for now in case we decide to use it for url gen'''
+
     def get_absolute_url(self):
         kwargs = {'pk': self.inv_reltn.pk,'slug': self.inv_reltn.bus_reltn.bus_name
         }
@@ -56,7 +57,8 @@ class invoicefile(models.Model):
         value = self.inv_reltn.pk
         self.inv_slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
-        
+'''      
+
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
