@@ -1,13 +1,12 @@
 import datetime
 from django.shortcuts import render,redirect
 from .modelforms import invoiceform, lineitemformset
-from apps.invoice_app.models import invoice,lineitem, invoicefile
+from apps.invoice_app.models import invoice,lineitem
 from .controllers.invoicegenerator import handleinvoicegen, generatepdf
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponseRedirect
 import io
 # Create your views here.
 
@@ -51,7 +50,7 @@ def invoicesview(request,bus,pk):
 
 #return file utilizing buffer as the file
 @login_required
-@permission_required('invoice_app.view_invoicefile',raise_exception=True)
+#@permission_required('invoice_app.view_invoicefile',raise_exception=True)
 def downloadpdf(request, bus, pk):
     buffer = io.BytesIO()
     inv=invoice.objects.get(pk=pk)

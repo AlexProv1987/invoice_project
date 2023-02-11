@@ -1,6 +1,6 @@
 import datetime
 from decimal import *
-from apps.invoice_app.models import invoice,lineitem,invoicefile
+from apps.invoice_app.models import invoice,lineitem
 from apps.product_app.models import product
 from apps.business_app.models import business,client
 from invoicegenie.project_classes.helperclass import postreqhelpers

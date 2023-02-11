@@ -38,11 +38,11 @@ class invoice(models.Model):
         max_digits=11,
     )
     inv_status = models.IntegerField(choices=inv_status_choices)
-    inv_billed_date = models.DateField(blank=True)
-    inv_paid_date = models.DateField(blank=True)
-    inv_generated_date=models.DateTimeField(blank=False)
+    inv_billed_date = models.DateField(null=True)
+    inv_paid_date = models.DateField(null=True)
+    inv_generated_date=models.DateTimeField(null=True)
 
-''' Unused we will generate a PDF on demand
+''' Unused we will generate a PDF on demand'''     
 class invoicefile(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     inv_slug = models.SlugField(editable=False,null=False, max_length=275, unique=True, default='')
@@ -56,8 +56,7 @@ class invoicefile(models.Model):
     def save(self,*args,**kwargs):
         value = self.inv_reltn.pk
         self.inv_slug = slugify(value, allow_unicode=True)
-        super().save(*args, **kwargs)
-'''      
+        super().save(*args, **kwargs) 
 
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
