@@ -59,7 +59,7 @@ class Command(BaseCommand):
                 #django uses smtp for mailing we need to make this more robust so its not just generic exception
                 failed_invoice.append(f'{inv.pk} Failed To Send Message - Base SMTPException')
             #cleanup/remove file
-            self.destry_temp_file(temp_pdf)
+            self._destry_temp_file(temp_pdf)
         #update success invoice
         self._update_invoice_status(sucess_invoice)
         #email log admin, if no errors, send success email
@@ -69,14 +69,14 @@ class Command(BaseCommand):
     def _get_temp_file(self, object, prefix, suffix):
         #create temp file
         temp_file = tempfile.NamedTemporaryFile(delete=False, prefix=prefix, suffix=suffix)
-        #output the pdf object to the temp file
+        #output (save) the pdf object to the temp file
         object.output(temp_file)
         #reset file pos to start
         temp_file.seek(0)
         return temp_file
 
     #destroy file in file system
-    def destry_temp_file(self,fname):
+    def _destry_temp_file(self,fname):
         fname.close()
         os.unlink(fname.name)
 
@@ -87,7 +87,7 @@ class Command(BaseCommand):
             obj.inv_billed_date = datetime.date.today()
         invoice.objects.bulk_update(obj_list, fields=['inv_status', 'inv_billed_date'], batch_size=200)
     
-    #send a log will construct a way to get emails from DB
+    #send a log very archaic atm
     def _send_log(self, error_log, company_email, success_count):
         email = mail.EmailMessage (
             f'Email Log for Invoice Billing Job on {datetime.date.today()}', 
