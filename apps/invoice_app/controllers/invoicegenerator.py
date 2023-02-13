@@ -93,7 +93,8 @@ class custFPDF(FPDF):
         #first line 
         self.set_font('Times', 'B', 15)
         self.cell(100,0,f"{str(self.invoice.bus_reltn.bus_name)}",ln=0)
-        self.image('./busimgs/testlogo2.PNG', 95, 8, 33)
+        #removing image until one is attained
+        #self.image('./busimgs/testlogo2.PNG', 95, 8, 33)
         self.set_font('Times', 'B', 10)
         self.cell(100,0,'INVOICE'.rjust(90), ln=1)
         self.ln(6)
