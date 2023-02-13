@@ -8,7 +8,6 @@ from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 import io
-from django.http import HttpResponseRedirect
 # Create your views here.
 
 #view method will be split later, just sticking to one for testing
@@ -81,7 +80,7 @@ def updateinvoicestatus(request,bus,pk):
         inv.inv_paid_date = datetime.date.today()
         inv.save()
         messages.success(request,f'INV{pk} For {inv.bus_reltn.bus_name} Set To {inv.get_inv_status_display()}.')  
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect('manage-bus')
 
 #set invoice to cancelled
 @login_required
@@ -91,4 +90,4 @@ def cancelinvoice(request, bus, pk):
     inv.inv_status = invoice.Cancelled
     inv.save()
     messages.success(request,f'INV{pk} For {inv.bus_reltn.bus_name} Set To {inv.get_inv_status_display()}.')
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect('manage-bus')
