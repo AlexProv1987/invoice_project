@@ -101,7 +101,7 @@ class custFPDF(FPDF):
         self.set_font('Times', '', 12)
         self.cell(100,0,f"{self.invoice.bus_reltn.bus_street}",ln=0)
         self.set_font('Times','', 8)
-        self.cell(100,0,f'INV{str(self.invoice.pk)}'.rjust(125), ln=1)
+        self.cell(100,0,f'INV{str(self.invoice.pk)}'.rjust(120), ln=1)
         self.ln(6)
         #third line
         self.set_font('Times', '', 12)
