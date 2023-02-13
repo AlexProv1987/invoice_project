@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
@@ -21,14 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ['SECRET_KEY']
-else:
-    from .settings_local import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'DEBUG' in os.environ:
-    DEBUG=os.environ['DEBUG']
+DEBUG=False
 
-ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.eba-e3pbeibn.us-west-2.elasticbeanstalk.com','127.0.0.1']
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
