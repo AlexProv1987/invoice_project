@@ -27,16 +27,29 @@ class postpayment():
             self.return_message=f"{self.req['invoice_reltn']} Does Not Exist"
             return False
 
-    def _postpayment(self) ->bool:
-        if self._checkbalance():
+    def _check_status(self) -> bool:
+        if self.invobj.inv_status == invoice.Cancelled or self.invobj.inv_status == invoice.ReadyToBill:
+            self.return_message=f"INV # {self.req['invoice_reltn']} is in a {self.invobj.get_inv_status_display()} status"
+            return False
+        else:
+            return True
+
+    def _check_ptm_amt(self) -> bool:
+        if Money(self.req['payment_amt_0'], 'USD') <= Money(0.00,'USD'):
+            self.return_message='Payment Amount Must Be Greater Than Zero.'
+            return False
+        else:
+            return True
+
+    def _postpayment(self) -> bool:
+        print(Money(self.req['payment_amt_0'],'USD'))
+        if self._checkbalance() and self._check_status() and self._check_ptm_amt():
             newbal = self._getnewbalance(self.invobj.curr_amt_due,Money(self.req['payment_amt_0'],'USD'))
-            print(newbal)
             if newbal < Money(0.00, 'USD'):
                 self.return_message="Cannot apply a payment in excess of total balance"
                 return False
             else:
                 try:
-                    print('hello')
                     self.invobj.curr_amt_due = newbal
                     if newbal == Money('0.00', 'USD'):
                         self.invobj.inv_status = invoice.Paid

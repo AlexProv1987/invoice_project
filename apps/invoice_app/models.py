@@ -57,7 +57,8 @@ class invoicefile(models.Model):
         value = self.inv_reltn.pk
         self.inv_slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs) 
-
+    class Meta:
+        managed=False
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
