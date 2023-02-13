@@ -15,6 +15,7 @@ class makepayment(SuccessMessageMixin,CreateView):
         context = super(makepayment,self).get_context_data(**kwargs)
         form = paymentform(pk=self.kwargs['pk'])
         context['form'] = form
+        context['inv'] = self.kwargs['pk']
         #context['form'].fields['invoice_reltn'].initial = self.kwargs['pk']
         return context
 
