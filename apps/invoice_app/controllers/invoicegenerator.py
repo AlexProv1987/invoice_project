@@ -114,7 +114,7 @@ class custFPDF(FPDF):
         self.set_font('Times', '', 12)
         self.cell(100,0,f"{self.invoice.bus_reltn.bus_phone}",ln=0)
         self.set_font('Times', '', 8)
-        self.cell(100,0,f'{today.strftime("%b %d %Y")}'.rjust(115), ln=1)
+        self.cell(100,0,f'{today.strftime("%b %d %Y")}'.rjust(111), ln=1)
         self.ln(6)
         #fifth line
         self.set_font('Times', '', 12)
@@ -124,11 +124,11 @@ class custFPDF(FPDF):
         self.ln(6)
         #sixth line
         self.set_font('Times', '', 8)
-        self.cell(100,0,'On Receipt'.rjust(190), ln=0)
+        self.cell(100,0,'On Receipt'.rjust(248), ln=0)
         self.ln(6)
         #seventh line
         self.set_font('Times', 'B', 10)
-        self.cell(100,0,'BALANACE DUE'.rjust(248), ln=0)
+        self.cell(100,0,'BALANACE DUE'.rjust(194), ln=0)
         self.ln(6)
         #eigth line
         self.set_font('Times', '', 8)
