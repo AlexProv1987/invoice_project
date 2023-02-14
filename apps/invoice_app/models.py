@@ -59,10 +59,11 @@ class invoicefile(models.Model):
         super().save(*args, **kwargs) 
     class Meta:
         managed=False
+
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
-    line_item_qty = models.PositiveBigIntegerField(blank=False)
+    line_item_qty = models.PositiveIntegerField(blank=False)
     line_item_amt = MoneyField(
         decimal_places=2,
         default=0,
