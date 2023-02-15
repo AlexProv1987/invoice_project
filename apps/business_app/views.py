@@ -71,9 +71,14 @@ class invbyclient(FilterView):
     filterset_class=invoicefilter
 
     def get(self,request,*args,**kwargs):
+        #set query set for client based on pk
+        self.queryset = invoice.objects.filter(client_reltn=self.kwargs['pk'])
+        #get filterset_class propertly and the filterset
         filterset_class = self.get_filterset_class()
         self.filterset = self.get_filterset(filterset_class)
-        self.object_list = invoice.objects.filter(client_reltn=self.kwargs['pk'])
+        #set the object_list property to the filtersets query set property
+        self.object_list = self.filterset.qs
+        #pass context to view
         context=self.get_context_data(filter=self.filterset,object_list=self.object_list)
         return self.render_to_response(context)
 
