@@ -10,8 +10,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -23,7 +23,9 @@ if 'SECRET_KEY' in os.environ:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG=False
 
-ALLOWED_HOSTS = ['invoice-project-aprovenz-test.eba-e3pbeibn.us-west-2.elasticbeanstalk.com','127.0.0.1']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com',]
+
+
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
@@ -49,6 +51,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "invoicegenie.middleware.HealthCheckMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
