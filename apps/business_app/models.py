@@ -25,3 +25,7 @@ class client(models.Model):
     def __str__(self):
         return self.client_name
 
+    class Meta:
+        indexes=[
+            models.Index(fields=['client_name',]),
+        ]

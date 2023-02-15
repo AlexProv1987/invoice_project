@@ -41,7 +41,13 @@ class invoice(models.Model):
     inv_billed_date = models.DateField(null=True)
     inv_paid_date = models.DateField(null=True)
     inv_generated_date=models.DateTimeField(null=True)
-
+    
+    class Meta:
+        indexes=[
+            models.Index(fields=['inv_status',]),
+            models.Index(fields=['curr_amt_due',]),
+        ]
+        
 ''' Unused we will generate a PDF on demand'''     
 class invoicefile(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
@@ -59,10 +65,11 @@ class invoicefile(models.Model):
         super().save(*args, **kwargs) 
     class Meta:
         managed=False
+        
 class lineitem(models.Model):
     inv_reltn = models.ForeignKey(invoice,on_delete=models.PROTECT)
     product = models.ForeignKey(product,on_delete=models.PROTECT, blank=False)
-    line_item_qty = models.PositiveBigIntegerField(blank=False)
+    line_item_qty = models.PositiveIntegerField(blank=False)
     line_item_amt = MoneyField(
         decimal_places=2,
         default=0,

@@ -93,27 +93,28 @@ class custFPDF(FPDF):
         #first line 
         self.set_font('Times', 'B', 15)
         self.cell(100,0,f"{str(self.invoice.bus_reltn.bus_name)}",ln=0)
-        self.image('./busimgs/testlogo2.PNG', 95, 8, 33)
+        #removing image until one is attained
+        #self.image('./busimgs/testlogo2.PNG', 95, 8, 33)
         self.set_font('Times', 'B', 10)
         self.cell(100,0,'INVOICE'.rjust(90), ln=1)
         self.ln(6)
         #second line
         self.set_font('Times', '', 12)
         self.cell(100,0,f"{self.invoice.bus_reltn.bus_street}",ln=0)
-        self.set_font('Times','', 12)
-        self.cell(100,0,f'INV{str(self.invoice.pk)}'.rjust(77), ln=1)
+        self.set_font('Times','', 8)
+        self.cell(100,0,f'INV{str(self.invoice.pk)}'.rjust(119), ln=1)
         self.ln(6)
         #third line
         self.set_font('Times', '', 12)
-        self.cell(100,0,f"{self.invoice.bus_reltn.bus_city},{self.invoice.bus_reltn.bus_state}",ln=0)
+        self.cell(100,0,f"{self.invoice.bus_reltn.bus_city}, {self.invoice.bus_reltn.bus_state}",ln=0)
         self.set_font('Times', 'B', 10)
         self.cell(100,0,f'DATE'.rjust(93), ln=1)
         self.ln(6)
         #fourth line
         self.set_font('Times', '', 12)
         self.cell(100,0,f"{self.invoice.bus_reltn.bus_phone}",ln=0)
-        self.set_font('Times', '', 12)
-        self.cell(100,0,f'{today.strftime("%b %d %Y")}'.rjust(74), ln=1)
+        self.set_font('Times', '', 8)
+        self.cell(100,0,f'{today.strftime("%b %d %Y")}'.rjust(116), ln=1)
         self.ln(6)
         #fifth line
         self.set_font('Times', '', 12)
@@ -122,16 +123,16 @@ class custFPDF(FPDF):
         self.cell(100,0,'DUE'.rjust(94), ln=1)
         self.ln(6)
         #sixth line
-        self.set_font('Times', '', 12)
-        self.cell(100,0,'On Receipt'.rjust(169), ln=0)
+        self.set_font('Times', '', 8)
+        self.cell(100,0,'On Receipt'.rjust(259), ln=0)
         self.ln(6)
         #seventh line
         self.set_font('Times', 'B', 10)
         self.cell(100,0,'BALANACE DUE'.rjust(194), ln=0)
         self.ln(6)
         #eigth line
-        self.set_font('Times', '', 12)
-        self.cell(100,0,f"USD {str(self.invoice.total_billed)}".rjust(168),ln=0)
+        self.set_font('Times', '', 8)
+        self.cell(100,0,f"USD {str(self.invoice.total_billed)}".rjust(255),ln=0)
         self.ln(6)
         # Set up a logo
         #self.image('./busimgs/testlogo2.png', 10, 8, 33)

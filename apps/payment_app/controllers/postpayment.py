@@ -28,12 +28,12 @@ class postpayment():
             return False
 
     def _check_status(self) -> bool:
-        if self.invobj.inv_status == invoice.Cancelled or self.invobj.inv_status == invoice.ReadyToBill:
-            self.return_message=f"INV # {self.req['invoice_reltn']} is in a {self.invobj.get_inv_status_display()} status"
-            return False
-        else:
+        if self.invobj.inv_status == invoice.Billed:
             return True
-
+        else:
+            self.return_message=f"INV # {self.req['invoice_reltn']} is in a {self.invobj.get_inv_status_display()} status. Payment cannot be made unless in a Billed Status."
+            return False
+            
     def _check_ptm_amt(self) -> bool:
         if Money(self.req['payment_amt_0'], 'USD') <= Money(0.00,'USD'):
             self.return_message='Payment Amount Must Be Greater Than Zero.'

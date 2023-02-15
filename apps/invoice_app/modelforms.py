@@ -36,18 +36,17 @@ class baselineitemformset(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.queryset = lineitem.objects.none()
-
-    #instead of adding required widgets to all formset fields, well validate the quantity here
+    
     def clean(self):
         if any(self.errors):
-            return
+            raise ValidationError(self.errors)
         for form in self.forms:
             qty = form.cleaned_data.get('line_item_qty')
             if isinstance(qty,int):
                 continue
             else:
                 raise ValidationError("Units must be greater than zero")
-
+    
 lineitemformset = modelformset_factory(
     lineitem, fields=("product", "line_item_qty"),labels={'product': 'Product','line_item_qty': 'Units'}, extra=1,
     formset=baselineitemformset

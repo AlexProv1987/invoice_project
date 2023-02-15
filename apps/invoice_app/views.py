@@ -29,10 +29,7 @@ def invoicegen(request):
                 messages.error(request,'Failed to Save Invoice. Please Contact your System Administrator')
                 return render(request, 'invoicegen.html', context)
         else:
-            invoice = invoiceform()
-            lineitems = lineitemformset()
             context = {'invoice': invoice,'lineitems':lineitems}
-            messages.error(request,'Failed to validate Product or Units.')
             return render(request, 'invoicegen.html', context)
     invoice = invoiceform()
     lineitems = lineitemformset()
