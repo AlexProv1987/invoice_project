@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "ebhealthcheck.apps.EBHealthCheckConfig",
     "crispy_forms",
     "django_filters",
     "apps.business_app",
