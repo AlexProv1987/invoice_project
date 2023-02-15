@@ -11,6 +11,18 @@ import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import requests
+
+try:
+    IMDSv2_TOKEN = requests.put('http://169.254.169.254/latest/api/token', headers={
+        'X-aws-ec2-metadata-token-ttl-seconds': '3600'
+    }).text
+    EC2_PRIVATE_IP = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', timeout=0.01, headers={
+        'X-aws-ec2-metadata-token': IMDSv2_TOKEN
+    }).text
+except requests.exceptions.RequestException:
+    EC2_PRIVATE_IP = None
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -24,6 +36,9 @@ DEBUG=False
 
 ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com',]
 
+if EC2_PRIVATE_IP:
+    ALLOWED_HOSTS.append(EC2_PRIVATE_IP)
+    
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
 
