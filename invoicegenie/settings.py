@@ -23,7 +23,7 @@ if 'SECRET_KEY' in os.environ:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG=False
 
-ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com/','127.0.0.1']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com','127.0.0.1']
 
 FILTERS_EMPTY_CHOICE_LABEL = '-----------'
 # Application definition
