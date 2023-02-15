@@ -29,10 +29,9 @@
       <td>{{ object.inv_paid_date|date:"M d, Y" }}</td>
       <td>{{ object.total_billed }}</td>
       <td>{{ object.curr_amt_due }}</td>
-      <td class="text-center"><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-eye fa-lg"></i></a></td>
+      <td><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-eye fa-lg"></i></a></td>
       <td class="text-center"><a href="{% url 'download-pdf' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-cloud-download fa-lg"></i></a></td>
-      <td class="text-center"><a href="{% url 'make-payment' pk=object.pk %}"><i class="fa  fa-money fa-lg"></i></a>
-      </td>
+      <td class="text-center"><a href="{% url 'make-payment' pk=object.pk %}"><i class="fa  fa-money fa-lg"></i></a></td>
     </tr>
     {% empty %}
     <td>No Invoices Found</td>
