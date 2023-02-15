@@ -11,9 +11,9 @@
       <th scope="col">Paid</th>
       <th scope="col">Total Billed</th>
       <th scope="col">Amount Due</th>
-      <th scope="col">View</th>
-      <th scope="col">Download</th>
-      <th scope="col">Payment</th>
+      <th scope="col" class="text-center">View</th>
+      <th scope="col" class="text-center">Download</th>
+      <th scope="col" class="text-center">Payment</th>
     </tr>
   </thead>
   <tbody>
@@ -29,7 +29,7 @@
       <td>{{ object.inv_paid_date|date:"M d, Y" }}</td>
       <td>{{ object.total_billed }}</td>
       <td>{{ object.curr_amt_due }}</td>
-      <td><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-eye fa-lg"></i></a></td>
+      <td class="text-center"><a href="{% url 'inv-view' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-reply-all fa-lg"></i></a></td>
       <td class="text-center"><a href="{% url 'download-pdf' bus=object.bus_reltn.bus_name pk=object.pk %}"><i class="fa fa-cloud-download fa-lg"></i></a></td>
       <td class="text-center"><a href="{% url 'make-payment' pk=object.pk %}"><i class="fa  fa-money fa-lg"></i></a></td>
     </tr>
