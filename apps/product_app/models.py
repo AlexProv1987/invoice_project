@@ -23,3 +23,8 @@ class product(models.Model):
     
     def __str__(self):
         return self.p_name
+    
+    class Meta:
+        indexes=[
+            models.Index(fields=['p_name',]),
+        ]
