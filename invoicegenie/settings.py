@@ -23,7 +23,7 @@ if 'SECRET_KEY' in os.environ:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG=False
 
-ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com','invoice-project-aprovenz-prod.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['invoice-project-aprovenz-test.us-west-2.elasticbeanstalk.com','invoice-project-aprovenz-prod.us-west-2.elasticbeanstalk.com','apps.dnicolrobertinvbus.com']
 
 
 
